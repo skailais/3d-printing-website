@@ -42,7 +42,9 @@ export default function HomeHero() {
       {/* the painted panel: a landscape seen through the ensō */}
       <motion.div
         style={{ y: ensoY, rotate: ensoRotate }}
-        className="pointer-events-none absolute right-4 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-1/2 md:block lg:right-16 xl:h-[38rem] xl:w-[38rem]"
+        /* only from lg — at tablet widths a 34rem ring lands on top of the
+           subtitle and swallows it */
+        className="pointer-events-none absolute right-4 top-1/2 hidden h-[30rem] w-[30rem] -translate-y-1/2 lg:block lg:right-8 xl:right-16 xl:h-[38rem] xl:w-[38rem]"
       >
         <MoonWindow className="absolute inset-0 h-full w-full" />
         <Enso className="absolute inset-0 h-full w-full" color="var(--ink)" strokeWidth={5} />
@@ -57,8 +59,8 @@ export default function HomeHero() {
         </div>
       </motion.div>
 
-      {/* on small screens the gesture drops below the type rather than behind it */}
-      <div className="pointer-events-none absolute -right-14 bottom-[-3rem] h-[19rem] w-[19rem] opacity-50 md:hidden">
+      {/* below lg the gesture drops into the corner rather than behind the type */}
+      <div className="pointer-events-none absolute -right-14 bottom-[-3rem] h-[19rem] w-[19rem] opacity-50 sm:h-[24rem] sm:w-[24rem] lg:hidden">
         <MoonWindow className="absolute inset-0 h-full w-full" />
         <Enso className="absolute inset-0 h-full w-full" color="var(--ink)" strokeWidth={6} />
       </div>

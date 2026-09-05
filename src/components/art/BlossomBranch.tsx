@@ -5,21 +5,29 @@ import { motion } from "framer-motion";
 
 type Bloom = { x: number; y: number; r: number; open: boolean; delay: number };
 
+/* Positions sit on the bough and its shoots — floating them free of the wood
+   reads as specks of stray pigment rather than flowers. */
 const blooms: Bloom[] = [
-  { x: 96, y: 96, r: 15, open: true, delay: 0.1 },
-  { x: 158, y: 62, r: 11, open: true, delay: 0.22 },
-  { x: 205, y: 122, r: 13, open: true, delay: 0.34 },
-  { x: 268, y: 78, r: 9, open: false, delay: 0.46 },
-  { x: 300, y: 150, r: 12, open: true, delay: 0.55 },
-  { x: 360, y: 108, r: 8, open: false, delay: 0.66 },
-  { x: 402, y: 168, r: 11, open: true, delay: 0.74 },
-  { x: 62, y: 158, r: 9, open: false, delay: 0.18 },
+  { x: 110, y: 170, r: 12, open: true, delay: 0.1 },
+  { x: 88, y: 112, r: 9, open: false, delay: 0.18 },
+  { x: 152, y: 146, r: 14, open: true, delay: 0.26 },
+  { x: 212, y: 80, r: 11, open: true, delay: 0.36 },
+  { x: 248, y: 112, r: 9, open: false, delay: 0.46 },
+  { x: 298, y: 114, r: 13, open: true, delay: 0.54 },
+  { x: 352, y: 170, r: 10, open: true, delay: 0.64 },
+  { x: 388, y: 126, r: 8, open: false, delay: 0.72 },
 ];
 
 function Flower({ bloom, petal, heart }: { bloom: Bloom; petal: string; heart: string }) {
   const { x, y, r, open } = bloom;
   if (!open) {
-    return <circle cx={x} cy={y} r={r * 0.42} fill={heart} opacity={0.85} />;
+    /* a bud: two closed petals with the colour just showing at the tip */
+    return (
+      <g>
+        <ellipse cx={x} cy={y - r * 0.18} rx={r * 0.36} ry={r * 0.52} fill={petal} stroke={heart} strokeWidth="0.6" />
+        <circle cx={x} cy={y - r * 0.5} r={r * 0.2} fill={heart} />
+      </g>
+    );
   }
   return (
     <g>
