@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,13 +22,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://caliprint.example.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "CaliPrint — Professional 3D Printing",
-    template: "%s — CaliPrint",
+    default: `${SITE_NAME} — Professional 3D Printing`,
+    template: `%s — ${SITE_NAME}`,
   },
-  description:
-    "Upload a model, choose a material, get a precision-printed part. Professional FDM and resin 3D printing, prototyping and small-batch production.",
+  description: SITE_DESCRIPTION,
   keywords: [
     "3D printing",
     "FDM printing",
@@ -37,17 +37,20 @@ export const metadata: Metadata = {
     "small batch production",
     "custom parts",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "CaliPrint — Professional 3D Printing",
-    description:
-      "Upload a model, choose a material, get a precision-printed part.",
+    title: `${SITE_NAME} — Professional 3D Printing`,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CaliPrint — Professional 3D Printing",
-    description:
-      "Upload a model, choose a material, get a precision-printed part.",
+    title: `${SITE_NAME} — Professional 3D Printing`,
+    description: SITE_DESCRIPTION,
   },
 };
 
