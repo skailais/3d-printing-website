@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Seal } from "@/components/art/Seal";
+import { InkPlate } from "@/components/art/InkPlate";
 import { Reveal } from "@/components/ui/Reveal";
 import { InkWash } from "@/components/art/InkWash";
 import { steps } from "@/lib/data";
@@ -40,16 +41,29 @@ export default function ProcessSteps() {
                     </Seal>
                   </div>
 
-                  <div className="sm:col-span-10">
+                  <div className="sm:col-span-6">
                     <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                       {step.title}
                     </h2>
-                    <p className="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-ink-soft">
+                    <p className="mt-5 text-[1.02rem] leading-relaxed text-ink-soft">
                       {step.description}
                     </p>
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-4 text-sm leading-relaxed text-ink-muted">
                       {step.detail}
                     </p>
+                  </div>
+
+                  {/* a plate for the step, painted in that step's pigment */}
+                  <div className="hidden sm:col-span-4 sm:block">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.94 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, margin: "-10% 0px" }}
+                      transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                      className="ml-auto h-40 w-40 lg:h-48 lg:w-48"
+                    >
+                      <InkPlate scene={step.scene} pigment={step.pigment} className="h-full w-full" />
+                    </motion.div>
                   </div>
                 </div>
               </Reveal>

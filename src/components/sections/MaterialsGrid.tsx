@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { BrushStroke } from "@/components/art/BrushStroke";
 import { materials } from "@/lib/data";
 
 const pigmentInk = {
@@ -36,17 +37,34 @@ export default function MaterialsGrid() {
                   }}
                 />
 
-                <div className="relative flex items-start justify-between">
-                  <span className="font-mono text-[0.55rem] tracked-label text-ink-faint">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <motion.span
-                    aria-hidden="true"
-                    variants={{ rest: { scale: 0.8, opacity: 0.35 }, hover: { scale: 1, opacity: 1 } }}
-                    transition={{ duration: 0.5 }}
-                    className="h-2.5 w-2.5 rounded-full"
-                    style={{ background: pigmentInk[m.pigment] }}
-                  />
+                <div className="relative">
+                  <div className="flex items-start justify-between">
+                    <span className="font-mono text-[0.55rem] tracked-label text-ink-faint">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <motion.span
+                      aria-hidden="true"
+                      variants={{ rest: { scale: 0.8, opacity: 0.35 }, hover: { scale: 1, opacity: 1 } }}
+                      transition={{ duration: 0.5 }}
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{ background: pigmentInk[m.pigment] }}
+                    />
+                  </div>
+
+                  {/* a swatch of the material, laid down as a brush stroke */}
+                  <motion.div
+                    variants={{ rest: { scaleX: 0.88, opacity: 0.7 }, hover: { scaleX: 1, opacity: 1 } }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-7 h-10 w-[86%] origin-left"
+                  >
+                    <BrushStroke
+                      variant="swash"
+                      color={pigmentInk[m.pigment]}
+                      className="h-full w-full"
+                      animate={false}
+                      opacity={0.85}
+                    />
+                  </motion.div>
                 </div>
 
                 <div className="relative">

@@ -97,13 +97,22 @@ export const services: Service[] = [
   },
 ];
 
-export const steps = [
+export const steps: {
+  index: string;
+  title: string;
+  description: string;
+  detail: string;
+  scene: Scene;
+  pigment: Pigment;
+}[] = [
   {
     index: "01",
     title: "Send Your Model",
     description: "Drop an STL, OBJ or STEP file — or a sketch, if that is all you have.",
     detail:
       "We check wall thickness, manifold geometry and tolerances before anything is quoted, and tell you what we would change.",
+    scene: "cranes",
+    pigment: "jade",
   },
   {
     index: "02",
@@ -111,6 +120,8 @@ export const steps = [
     description: "Pick a pigment, a strength, a surface — we advise if you would rather we chose.",
     detail:
       "Material, layer height, infill and orientation are chosen together; they are one decision, not four.",
+    scene: "vessel",
+    pigment: "gold",
   },
   {
     index: "03",
@@ -118,6 +129,8 @@ export const steps = [
     description: "Watched layer by layer, on machines we maintain ourselves.",
     detail:
       "Every plate is inspected off the bed. If it is not right, it is reprinted before you ever hear about it.",
+    scene: "mountains",
+    pigment: "ink",
   },
   {
     index: "04",
@@ -125,6 +138,8 @@ export const steps = [
     description: "Cleaned, checked, packed, and shipped tracked to your door.",
     detail:
       "Supports removed and surfaces finished by hand. Local pickup available if you would rather see it in person.",
+    scene: "blossom",
+    pigment: "vermilion",
   },
 ];
 
