@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Seal, SealGlyph } from "@/components/art/Seal";
 import { InkWash } from "@/components/art/InkWash";
+import { InkPlate } from "@/components/art/InkPlate";
 import { materials } from "@/lib/data";
 
 function formatBytes(bytes: number) {
@@ -105,12 +106,21 @@ export default function QuoteForm() {
                   }}
                   onDragLeave={() => setDragging(false)}
                   onDrop={onDrop}
-                  className={`relative flex min-h-[24rem] flex-col items-center justify-center gap-6 border p-10 text-center transition-all duration-500 ${
+                  className={`group/zone relative flex min-h-[28rem] flex-col items-center justify-center gap-6 overflow-hidden border p-10 text-center transition-all duration-500 ${
                     dragging
                       ? "border-vermilion bg-vermilion/5"
                       : "border-dashed border-ink/25 hover:border-ink/45 hover:bg-paper-warm/50"
                   }`}
                 >
+                  {/* a plate waiting under the drop area, warming as a file arrives */}
+                  <motion.span
+                    aria-hidden="true"
+                    animate={{ opacity: dragging ? 0.24 : 0.1, scale: dragging ? 1.04 : 1 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="pointer-events-none absolute inset-x-0 bottom-[-8%] mx-auto h-[62%] w-[76%]"
+                  >
+                    <InkPlate scene="vessel" pigment="jade" className="h-full w-full" />
+                  </motion.span>
                   <input
                     ref={inputRef}
                     type="file"

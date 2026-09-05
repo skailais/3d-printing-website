@@ -48,7 +48,9 @@ export default function ServicesList() {
                     </p>
                   </div>
 
-                  <dl className="flex gap-10 md:col-span-2">
+                  {/* stacked on wide screens: side by side, the column is too
+                      narrow and every value wraps mid-figure */}
+                  <dl className="flex gap-10 md:col-span-2 md:flex-col md:gap-5">
                     {s.specs.map((spec) => (
                       <div key={spec.label}>
                         <dt className="font-mono text-[0.55rem] tracked-label text-ink-faint">
