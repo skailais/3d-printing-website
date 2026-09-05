@@ -32,7 +32,7 @@ export function WorkCard({
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0 flex items-center justify-center"
         >
-          <InkPlate variant={index} pigment={item.pigment} className="h-[86%] w-[86%]" />
+          <InkPlate scene={item.scene} pigment={item.pigment} className="h-[96%] w-[96%]" />
         </motion.div>
 
         <motion.span

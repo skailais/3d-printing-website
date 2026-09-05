@@ -5,8 +5,6 @@ import { Reveal } from "@/components/ui/Reveal";
 import { InkPlate } from "@/components/art/InkPlate";
 import { services } from "@/lib/data";
 
-const pigments = ["jade", "vermilion", "gold", "ink"] as const;
-
 export default function ServicesList() {
   return (
     <section className="relative py-24 sm:py-32">
@@ -67,11 +65,7 @@ export default function ServicesList() {
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                       className="h-24 w-24 opacity-80"
                     >
-                      <InkPlate
-                        variant={i}
-                        pigment={pigments[i % pigments.length]}
-                        className="h-full w-full"
-                      />
+                      <InkPlate scene={s.scene} pigment={s.pigment} className="h-full w-full" />
                     </motion.div>
                   </div>
                 </motion.article>

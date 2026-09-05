@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Enso } from "@/components/art/Enso";
 import { InkWash } from "@/components/art/InkWash";
+import { InkWave } from "@/components/art/InkWave";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -18,7 +19,13 @@ export default function CTASection({
   secondary?: { href: string; label: string };
 }) {
   return (
-    <section className="ink-panel relative overflow-hidden py-32 sm:py-40">
+    <section className="ink-panel relative overflow-hidden pb-32 pt-40 sm:pb-40 sm:pt-48">
+      {/* the paper breaks into the ink as a wave */}
+      <InkWave
+        className="absolute inset-x-0 top-0 h-24 w-full sm:h-32"
+        color="var(--paper)"
+        flip
+      />
       <InkWash pigment="vermilion" size={620} style={{ top: "-14rem", left: "50%", marginLeft: "-19rem" }} />
       <InkWash pigment="jade" size={420} style={{ bottom: "-8rem", right: "8%" }} />
 

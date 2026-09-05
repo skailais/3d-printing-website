@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Enso } from "@/components/art/Enso";
 import { BrushStroke } from "@/components/art/BrushStroke";
+import { BlossomBranch } from "@/components/art/BlossomBranch";
 import { InkWash } from "@/components/art/InkWash";
 import { principles } from "@/lib/data";
 
@@ -37,15 +38,21 @@ export default function StudioContent() {
           </Reveal>
 
           <Reveal delay={0.15}>
-            <motion.div
-              initial={{ rotate: -6, opacity: 0 }}
-              whileInView={{ rotate: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto h-[24rem] w-[24rem] sm:h-[30rem] sm:w-[30rem]"
-            >
-              <Enso className="h-full w-full" color="var(--ink)" strokeWidth={6} />
-            </motion.div>
+            <div className="relative mx-auto h-[24rem] w-[24rem] sm:h-[30rem] sm:w-[30rem]">
+              <motion.div
+                initial={{ rotate: -6, opacity: 0 }}
+                whileInView={{ rotate: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0"
+              >
+                <Enso className="h-full w-full" color="var(--ink)" strokeWidth={6} />
+              </motion.div>
+              {/* a branch coming into flower across the circle */}
+              <div className="absolute -bottom-6 -left-10 w-[112%]">
+                <BlossomBranch className="h-auto w-full" />
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>

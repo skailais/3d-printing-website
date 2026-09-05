@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { BrushStroke } from "@/components/art/BrushStroke";
+import { Bamboo } from "@/components/art/Bamboo";
 import { navLinks } from "@/lib/data";
 
 const socials = [
@@ -14,6 +15,11 @@ export default function Footer() {
     <footer className="ink-panel relative z-10 overflow-hidden">
       <div className="pointer-events-none absolute -top-6 left-0 h-16 w-[140%] opacity-30">
         <BrushStroke variant="band" color="rgba(243,239,230,0.35)" className="h-full w-full" animate={false} />
+      </div>
+
+      {/* bamboo standing at the right edge of the ink */}
+      <div className="pointer-events-none absolute -right-6 bottom-0 top-0 hidden w-56 opacity-[0.14] md:block lg:right-4 lg:w-64">
+        <Bamboo className="h-full w-full" color="var(--paper)" />
       </div>
 
       <div className="mx-auto max-w-[86rem] px-6 py-20 lg:px-10">

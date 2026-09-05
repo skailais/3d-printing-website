@@ -1,6 +1,7 @@
 import HomeHero from "@/components/sections/HomeHero";
 import Manifesto from "@/components/sections/Manifesto";
 import ServicesPreview from "@/components/sections/ServicesPreview";
+import LandscapeBand from "@/components/sections/LandscapeBand";
 import WorkPreview from "@/components/sections/WorkPreview";
 import MaterialsMarquee from "@/components/sections/MaterialsMarquee";
 import StatsBand from "@/components/sections/StatsBand";
@@ -12,6 +13,7 @@ export default function Home() {
       <HomeHero />
       <Manifesto />
       <ServicesPreview />
+      <LandscapeBand />
       <WorkPreview />
       <MaterialsMarquee />
       <StatsBand />

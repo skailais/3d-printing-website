@@ -11,6 +11,8 @@ export type Service = {
   title: string;
   description: string;
   detail: string;
+  scene: Scene;
+  pigment: Pigment;
   specs: { label: string; value: string }[];
 };
 
@@ -19,6 +21,8 @@ export const services: Service[] = [
     slug: "fdm",
     title: "FDM Printing",
     description: "Durable parts in PLA, PETG, ABS and more.",
+    scene: "mountains",
+    pigment: "ink",
     detail:
       "Fused filament for parts that need to work — jigs, housings, fixtures, brackets. Layer heights from 0.08 to 0.32 mm.",
     specs: [
@@ -30,6 +34,8 @@ export const services: Service[] = [
     slug: "resin",
     title: "Resin / SLA",
     description: "Ultra-fine detail for miniatures and masters.",
+    scene: "blossom",
+    pigment: "vermilion",
     detail:
       "Photopolymer printing where surface finish matters — figures, jewellery masters, dental-grade fit, casting patterns.",
     specs: [
@@ -41,6 +47,8 @@ export const services: Service[] = [
     slug: "prototyping",
     title: "Prototyping",
     description: "Iterate fast, from sketch to first article.",
+    scene: "cranes",
+    pigment: "jade",
     detail:
       "Same-week loops. Print, test, revise, print again — we keep the tooling warm so your revisions do not queue.",
     specs: [
@@ -52,6 +60,8 @@ export const services: Service[] = [
     slug: "functional",
     title: "Functional Parts",
     description: "Engineered for load, heat and fatigue.",
+    scene: "wave",
+    pigment: "ink",
     detail:
       "Material and orientation chosen for the forces the part will actually see. Annealing and post-processing on request.",
     specs: [
@@ -63,6 +73,8 @@ export const services: Service[] = [
     slug: "custom",
     title: "Custom Projects",
     description: "Complex geometry, tailored to your brief.",
+    scene: "vessel",
+    pigment: "gold",
     detail:
       "Bring a drawing, a photo, a broken part or a rough idea. We model it, print it, and hand you something real.",
     specs: [
@@ -74,6 +86,8 @@ export const services: Service[] = [
     slug: "batch",
     title: "Small Batch",
     description: "Consistent runs from 10 to 10,000 units.",
+    scene: "bamboo",
+    pigment: "jade",
     detail:
       "Farm capacity for repeatable production, with first-article approval and per-batch dimensional checks.",
     specs: [
@@ -132,21 +146,25 @@ export const materials: Material[] = [
   { name: "Carbon Fibre", traits: ["Stiff", "Light"], note: "Filled filaments where deflection is the enemy.", pigment: "gold" },
 ];
 
+export type Pigment = "jade" | "vermilion" | "gold" | "ink";
+export type Scene = "mountains" | "bamboo" | "blossom" | "wave" | "cranes" | "vessel";
+
 export type WorkItem = {
   category: string;
   title: string;
   note: string;
-  pigment: "jade" | "vermilion" | "gold" | "ink";
+  pigment: Pigment;
+  scene: Scene;
   size: "lg" | "md" | "sm";
 };
 
 export const work: WorkItem[] = [
-  { category: "Prototypes", title: "Concept to first article", note: "Enclosure study, six revisions in nine days.", pigment: "jade", size: "lg" },
-  { category: "Mechanical Parts", title: "Brackets, gears, housings", note: "PETG and nylon, printed for load paths.", pigment: "ink", size: "sm" },
-  { category: "Miniatures", title: "High-detail resin figures", note: "20 µm layers, hand-finished.", pigment: "vermilion", size: "sm" },
-  { category: "Custom Designs", title: "Built to your geometry", note: "Modelled in-house from a single photograph.", pigment: "gold", size: "md" },
-  { category: "Replacement Parts", title: "Out of production? Not any more", note: "Measured, remodelled, reprinted in ASA.", pigment: "jade", size: "md" },
-  { category: "Small Batch", title: "Repeatable runs", note: "400 units, dimensional check on every tenth.", pigment: "ink", size: "sm" },
+  { category: "Prototypes", title: "Concept to first article", note: "Enclosure study, six revisions in nine days.", pigment: "jade", scene: "mountains", size: "lg" },
+  { category: "Mechanical Parts", title: "Brackets, gears, housings", note: "PETG and nylon, printed for load paths.", pigment: "ink", scene: "bamboo", size: "sm" },
+  { category: "Miniatures", title: "High-detail resin figures", note: "20 µm layers, hand-finished.", pigment: "vermilion", scene: "blossom", size: "sm" },
+  { category: "Custom Designs", title: "Built to your geometry", note: "Modelled in-house from a single photograph.", pigment: "gold", scene: "vessel", size: "md" },
+  { category: "Replacement Parts", title: "Out of production? Not any more", note: "Measured, remodelled, reprinted in ASA.", pigment: "jade", scene: "wave", size: "md" },
+  { category: "Small Batch", title: "Repeatable runs", note: "400 units, dimensional check on every tenth.", pigment: "ink", scene: "cranes", size: "sm" },
 ];
 
 export const stats = [
