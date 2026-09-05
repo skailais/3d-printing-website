@@ -29,7 +29,7 @@ export function InkWave({
     >
       <defs>
         <filter id={rough} x="-5%" y="-30%" width="110%" height="160%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.008 0.05" numOctaves="4" seed="6" result="n" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.008 0.05" numOctaves="3" seed="6" result="n" />
           <feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </defs>

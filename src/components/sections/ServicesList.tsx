@@ -63,6 +63,7 @@ export default function ServicesList() {
                     <motion.div
                       variants={{ rest: { rotate: 0, scale: 1 }, hover: { rotate: -4, scale: 1.05 } }}
                       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ willChange: "transform" }}
                       className="h-24 w-24 opacity-80"
                     >
                       <InkPlate scene={s.scene} pigment={s.pigment} className="h-full w-full" />

@@ -30,6 +30,9 @@ export function WorkCard({
         <motion.div
           variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          /* own layer, so scaling composites the already-filtered plate rather
+             than re-running the turbulence filter every frame */
+          style={{ willChange: "transform" }}
           className="absolute inset-0 flex items-center justify-center"
         >
           <InkPlate scene={item.scene} pigment={item.pigment} className="h-[96%] w-[96%]" />

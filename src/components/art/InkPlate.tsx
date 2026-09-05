@@ -219,10 +219,14 @@ export function InkPlate({
   scene = "mountains",
   pigment = "ink",
   className = "",
+  ornament = false,
 }: {
   scene?: Scene;
   pigment?: Pigment;
   className?: string;
+  /** Skips the turbulence filters. For plates used as faint watermarks, where
+   *  the broken edge is invisible anyway and the filter is pure cost. */
+  ornament?: boolean;
 }) {
   const id = useId().replace(/:/g, "");
   const rough = `plate-${id}`;
@@ -233,21 +237,25 @@ export function InkPlate({
 
   return (
     <svg viewBox="0 0 320 320" fill="none" className={className} aria-hidden="true">
-      <defs>
-        <filter id={rough} x="-12%" y="-12%" width="124%" height="124%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves="4" seed="5" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-        <filter id={soft} x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="12" />
-        </filter>
-      </defs>
+      {!ornament && (
+        <defs>
+          <filter id={rough} x="-12%" y="-12%" width="124%" height="124%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02 0.06" numOctaves="3" seed="5" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id={soft} x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="12" />
+          </filter>
+        </defs>
+      )}
 
-      <g filter={`url(#${soft})`} opacity="0.5">
-        <ellipse cx="168" cy="150" rx="104" ry="86" fill={accent} opacity="0.12" />
-      </g>
+      {!ornament && (
+        <g filter={`url(#${soft})`} opacity="0.5">
+          <ellipse cx="168" cy="150" rx="104" ry="86" fill={accent} opacity="0.12" />
+        </g>
+      )}
 
-      <g filter={`url(#${rough})`}>
+      <g filter={ornament ? undefined : `url(#${rough})`}>
         <Composition ink={ink} accent={accent} />
       </g>
     </svg>

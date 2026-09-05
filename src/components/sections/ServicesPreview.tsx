@@ -47,7 +47,7 @@ export default function ServicesPreview() {
                     variants={{ rest: { opacity: 0.09, scale: 1 }, hover: { opacity: 0.2, scale: 1.08 } }}
                     className="pointer-events-none absolute -bottom-6 -right-4 h-40 w-40"
                   >
-                    <InkPlate scene={s.scene} pigment={s.pigment} className="h-full w-full" />
+                    <InkPlate scene={s.scene} pigment={s.pigment} className="h-full w-full" ornament />
                   </motion.span>
 
                   <div className="relative flex items-start justify-between gap-6">

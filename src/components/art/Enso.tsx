@@ -31,8 +31,8 @@ export function Enso({
   return (
     <svg viewBox="0 0 220 220" fill="none" className={className} aria-hidden="true">
       <defs>
-        <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="4" seed="7" result="noise" />
+        <filter id={filterId} x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="noise" />
           <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </defs>

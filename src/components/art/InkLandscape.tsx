@@ -96,7 +96,7 @@ export function InkLandscape({
       <svg viewBox="0 0 1440 520" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
         <defs>
           <filter id={rough} x="-5%" y="-15%" width="110%" height="130%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.03" numOctaves="4" seed="11" result="n" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.006 0.03" numOctaves="3" seed="11" result="n" />
             <feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G" />
           </filter>
           <filter id={soft} x="-20%" y="-20%" width="140%" height="140%">
