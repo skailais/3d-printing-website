@@ -52,9 +52,10 @@ export default function HomeHero() {
         </div>
       </motion.div>
 
-      <div className="pointer-events-none absolute inset-x-0 top-[20%] mx-auto h-[20rem] w-[20rem] opacity-70 md:hidden">
+      {/* on small screens the gesture drops below the type rather than behind it */}
+      <div className="pointer-events-none absolute -right-16 bottom-[-3rem] h-[19rem] w-[19rem] opacity-40 md:hidden">
         <Enso className="absolute inset-0 h-full w-full" color="var(--ink)" strokeWidth={7} />
-        <div className="absolute left-[4%] top-[38%] h-12 w-[80%] -rotate-[12deg] opacity-70">
+        <div className="absolute left-[4%] top-[38%] h-12 w-[80%] -rotate-[12deg] opacity-80">
           <BrushStroke variant="swash" color="var(--jade)" className="h-full w-full" />
         </div>
       </div>
