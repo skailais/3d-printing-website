@@ -63,7 +63,7 @@ export default function StudioContent() {
             {principles.map((p, i) => (
               <RevealItem key={p.title}>
                 <div className="border-t border-paper/20 pt-8">
-                  <span className="font-mono text-[0.58rem] tracked-label text-paper/40">
+                  <span className="font-mono text-[0.58rem] tracked-label text-paper/60">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-paper">

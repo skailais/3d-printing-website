@@ -46,7 +46,7 @@ export function Logo({
         </span>
         <span
           className={`mt-1 font-mono text-[0.55rem] tracked-label ${
-            tone === "paper" ? "text-paper/50" : "text-ink-faint"
+            tone === "paper" ? "text-paper/65" : "text-ink-faint"
           }`}
         >
           Print Studio

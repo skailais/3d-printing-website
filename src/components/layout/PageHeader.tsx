@@ -34,7 +34,7 @@ export function PageHeader({
               {index}
             </span>
             <span className="h-px w-16 bg-paper/25" />
-            <span className="font-mono text-[0.62rem] tracked-label text-paper/45 lg:hidden">
+            <span className="font-mono text-[0.62rem] tracked-label text-paper/65 lg:hidden">
               {eyebrow}
             </span>
           </div>

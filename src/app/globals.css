@@ -6,14 +6,15 @@
   --paper-deep: #e8e1d2;
   --paper-warm: #faf7f0;
 
-  /* ink */
+  /* ink — every step clears WCAG AA (4.5:1) on the paper ground, since the
+     small tracked labels use the faintest of them */
   --ink: #16130f;
   --ink-soft: #2e2a23;
-  --ink-muted: #6e675b;
-  --ink-faint: #9b9385;
+  --ink-muted: #5a5548;
+  --ink-faint: #6b6558;
 
   /* pigments */
-  --vermilion: #c4452d;
+  --vermilion: #bb4029;
   --vermilion-bright: #e15a3c;
   --jade: #1d6b66;
   --jade-light: #3e9c94;

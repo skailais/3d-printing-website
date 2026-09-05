@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Shippori_Mincho } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import MotionProvider from "@/components/MotionProvider";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
@@ -66,9 +67,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="relative flex min-h-full flex-col bg-paper">
         <div className="washi" aria-hidden="true" />
-        <Navbar />
-        <main className="relative z-10 flex-1">{children}</main>
-        <Footer />
+        <MotionProvider>
+          <Navbar />
+          <main className="relative z-10 flex-1">{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

@@ -38,7 +38,7 @@ export default function Manifesto() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mx-auto mt-10 max-w-md text-sm leading-relaxed text-paper/50"
+          className="mx-auto mt-10 max-w-md text-sm leading-relaxed text-paper/65"
         >
           Ten machines, twelve materials, and one person who follows your part
           from the quote to the box it ships in.

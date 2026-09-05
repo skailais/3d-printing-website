@@ -20,7 +20,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-14 md:grid-cols-12">
           <div className="md:col-span-5">
             <Logo tone="paper" />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-paper/55">
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-paper/70">
               A small print studio. Digital models in, finished objects out —
               prototypes, functional parts and short production runs.
             </p>
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-3 md:col-start-7">
-            <h3 className="font-mono text-[0.6rem] tracked-label text-paper/40">Pages</h3>
+            <h3 className="font-mono text-[0.6rem] tracked-label text-paper/60">Pages</h3>
             <ul className="mt-5 space-y-3">
               {navLinks.map((l) => (
                 <li key={l.href}>
@@ -54,7 +54,7 @@ export default function Footer() {
           </div>
 
           <div className="md:col-span-3">
-            <h3 className="font-mono text-[0.6rem] tracked-label text-paper/40">Studio</h3>
+            <h3 className="font-mono text-[0.6rem] tracked-label text-paper/60">Studio</h3>
             <ul className="mt-5 space-y-3 text-sm text-paper/70">
               <li>
                 <a href="mailto:studio@caliprint.example.com" className="transition-colors hover:text-vermilion-bright">
@@ -67,7 +67,7 @@ export default function Footer() {
                   <Link
                     key={s.label}
                     href={s.href}
-                    className="font-mono text-[0.6rem] tracked-label text-paper/50 transition-colors hover:text-vermilion-bright"
+                    className="font-mono text-[0.6rem] tracked-label text-paper/65 transition-colors hover:text-vermilion-bright"
                   >
                     {s.label}
                   </Link>
@@ -78,10 +78,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-20 flex flex-col-reverse items-start justify-between gap-4 border-t border-paper/12 pt-8 sm:flex-row sm:items-center">
-          <p className="font-mono text-[0.6rem] tracked-label text-paper/35">
+          <p className="font-mono text-[0.6rem] tracked-label text-paper/60">
             © {new Date().getFullYear()} CaliPrint
           </p>
-          <p className="font-mono text-[0.6rem] tracked-label text-paper/35">
+          <p className="font-mono text-[0.6rem] tracked-label text-paper/60">
             Ideas, made solid
           </p>
         </div>

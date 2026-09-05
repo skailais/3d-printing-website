@@ -130,7 +130,7 @@ export default function Navbar() {
                     onClick={() => setOpen(false)}
                     className="flex items-baseline gap-4 py-3 font-display text-4xl text-paper transition-colors hover:text-vermilion-bright"
                   >
-                    <span className="font-mono text-[0.6rem] text-paper/35">
+                    <span className="font-mono text-[0.6rem] text-paper/60">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {l.label}
