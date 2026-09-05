@@ -3,8 +3,10 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Enso } from "@/components/art/Enso";
+import { MoonWindow } from "@/components/art/MoonWindow";
 import { InkWash } from "@/components/art/InkWash";
 import { BrushStroke } from "@/components/art/BrushStroke";
+import { Splatter } from "@/components/art/Splatter";
 import { Seal, SealGlyph } from "@/components/art/Seal";
 import { Button } from "@/components/ui/Button";
 
@@ -37,31 +39,28 @@ export default function HomeHero() {
         <InkWash pigment="gold" size={380} style={{ top: "35%", left: "42%" }} drift={false} />
       </motion.div>
 
-      {/* the painted panel: ensō crossed by two loaded brush sweeps */}
+      {/* the painted panel: a landscape seen through the ensō */}
       <motion.div
         style={{ y: ensoY, rotate: ensoRotate }}
         className="pointer-events-none absolute right-4 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-1/2 md:block lg:right-16 xl:h-[38rem] xl:w-[38rem]"
       >
+        <MoonWindow className="absolute inset-0 h-full w-full" />
         <Enso className="absolute inset-0 h-full w-full" color="var(--ink)" strokeWidth={5} />
-        <div className="absolute left-[2%] top-[34%] h-20 w-[78%] -rotate-[13deg] opacity-80">
-          <BrushStroke variant="swash" color="var(--jade)" className="h-full w-full" />
-        </div>
-        <div className="absolute bottom-[24%] left-[26%] h-12 w-[52%] rotate-[7deg] opacity-75">
-          <BrushStroke variant="swash" color="var(--vermilion)" className="h-full w-full" />
-        </div>
-        <div className="absolute right-[12%] top-[16%]">
-          <Seal size={44} rotate={-7}>
+
+        {/* specks flicked off the brush as it left the paper */}
+        <Splatter className="absolute -right-[4%] top-[6%] h-40 w-40" color="var(--ink)" />
+
+        <div className="absolute right-[6%] top-[12%]">
+          <Seal size={46} rotate={-7}>
             <SealGlyph className="h-5 w-5" />
           </Seal>
         </div>
       </motion.div>
 
       {/* on small screens the gesture drops below the type rather than behind it */}
-      <div className="pointer-events-none absolute -right-16 bottom-[-3rem] h-[19rem] w-[19rem] opacity-40 md:hidden">
-        <Enso className="absolute inset-0 h-full w-full" color="var(--ink)" strokeWidth={7} />
-        <div className="absolute left-[4%] top-[38%] h-12 w-[80%] -rotate-[12deg] opacity-80">
-          <BrushStroke variant="swash" color="var(--jade)" className="h-full w-full" />
-        </div>
+      <div className="pointer-events-none absolute -right-14 bottom-[-3rem] h-[19rem] w-[19rem] opacity-50 md:hidden">
+        <MoonWindow className="absolute inset-0 h-full w-full" />
+        <Enso className="absolute inset-0 h-full w-full" color="var(--ink)" strokeWidth={6} />
       </div>
 
       {/* left rail */}

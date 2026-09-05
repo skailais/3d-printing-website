@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { InkWash } from "@/components/art/InkWash";
+import { InkRidges } from "@/components/art/InkRidges";
+import { Birds } from "@/components/art/Birds";
 import { VerticalLabel } from "@/components/art/VerticalLabel";
 import { BrushStroke } from "@/components/art/BrushStroke";
 
@@ -22,6 +24,21 @@ export function PageHeader({
     <header className="ink-panel relative overflow-hidden pb-40 pt-40 sm:pt-48">
       <InkWash pigment="jade" size={640} style={{ top: "-14rem", left: "-10rem" }} />
       <InkWash pigment="vermilion" size={520} style={{ bottom: "-12rem", right: "-8rem" }} />
+
+      {/* a range and a pale disc filling the empty half of the ink */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.8, delay: 0.5, ease: "easeOut" }}
+        className="pointer-events-none absolute bottom-0 right-0 hidden h-full w-[52%] md:block"
+      >
+        <span
+          className="absolute right-[18%] top-[26%] h-32 w-32 rounded-full lg:h-40 lg:w-40"
+          style={{ background: "radial-gradient(circle, rgba(225,90,60,0.22), rgba(225,90,60,0.06) 60%, transparent 72%)" }}
+        />
+        <InkRidges className="absolute inset-x-0 bottom-0 h-[62%] w-full" tone="paper" />
+        <Birds className="absolute right-[26%] top-[18%] h-16 w-28" color="var(--paper)" opacity={0.32} />
+      </motion.div>
 
       <div className="relative mx-auto flex max-w-[86rem] gap-10 px-6 lg:px-10">
         <div className="hidden shrink-0 pt-2 lg:block">

@@ -22,10 +22,14 @@ export function Enso({
   const id = useId().replace(/:/g, "");
   const filterId = `enso-rough-${id}`;
 
+  /* Centred on (110,110) with r=88 so the whole ring stays inside the 220
+     viewBox — an earlier version put the centre at (75,80) and the top-left
+     third was clipped away by the viewport. The stroke runs 320°, leaving the
+     dry gap at the top where the brush lifts. */
   const arcs = [
-    { d: "M 152 30 A 92 92 0 1 1 66 172", width: strokeWidth, opacity: 0.95 },
-    { d: "M 150 32 A 90 90 0 1 1 78 168", width: strokeWidth * 0.55, opacity: 0.5 },
-    { d: "M 64 174 A 92 92 0 0 0 104 188", width: strokeWidth * 0.3, opacity: 0.35 },
+    { d: "M 160.5 37.9 A 88 88 0 1 1 102.3 22.3", width: strokeWidth, opacity: 0.95 },
+    { d: "M 157.6 41.6 A 84 84 0 1 1 106 26.4", width: strokeWidth * 0.5, opacity: 0.45 },
+    { d: "M 102.3 22.3 A 88 88 0 0 1 128 26.2", width: strokeWidth * 0.28, opacity: 0.3 },
   ];
 
   return (
