@@ -6,45 +6,58 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { faqs } from "@/lib/data";
 
-function FaqRow({
+function Row({
   question,
   answer,
+  index,
   isOpen,
   onToggle,
 }: {
   question: string;
   answer: string;
+  index: number;
   isOpen: boolean;
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b border-border">
+    <div className="border-b border-rule">
       <button
         onClick={onToggle}
-        className="focus-ring flex w-full items-center justify-between gap-6 py-6 text-left"
         aria-expanded={isOpen}
+        className="focus-ring group flex w-full items-baseline gap-6 py-7 text-left"
       >
-        <span className="font-display text-base font-medium tracking-tight sm:text-lg">
+        <span className="font-mono text-[0.58rem] tracked-label text-ink-faint">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span
+          className={`flex-1 font-display text-xl tracking-tight transition-colors duration-300 sm:text-2xl ${
+            isOpen ? "text-vermilion" : "text-ink group-hover:text-vermilion"
+          }`}
+        >
           {question}
         </span>
         <motion.span
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-strong text-text-muted"
+          animate={{ rotate: isOpen ? 90 : 0 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="shrink-0 text-ink-muted"
+          aria-hidden="true"
         >
-          +
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.2" className="h-5 w-5">
+            <path d="M4 10h12M10 4v12" strokeLinecap="round" />
+          </svg>
         </motion.span>
       </button>
+
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-6 pr-10 text-sm leading-relaxed text-text-muted">
+            <p className="max-w-2xl pb-8 pl-12 pr-8 text-[0.95rem] leading-relaxed text-ink-muted">
               {answer}
             </p>
           </motion.div>
@@ -55,23 +68,26 @@ function FaqRow({
 }
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-28 sm:py-36">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8">
-        <SectionHeading eyebrow="FAQ" title="Good to know." />
+    <section id="faq" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-[74rem] px-6 lg:px-10">
+        <SectionHeading eyebrow="Questions" title="Good to know." />
 
-        <Reveal delay={0.1} className="mt-14">
-          {faqs.map((f, i) => (
-            <FaqRow
-              key={f.question}
-              question={f.question}
-              answer={f.answer}
-              isOpen={openIndex === i}
-              onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-            />
-          ))}
+        <Reveal delay={0.1}>
+          <div className="mt-14 border-t border-rule">
+            {faqs.map((f, i) => (
+              <Row
+                key={f.question}
+                index={i}
+                question={f.question}
+                answer={f.answer}
+                isOpen={open === i}
+                onToggle={() => setOpen(open === i ? null : i)}
+              />
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>

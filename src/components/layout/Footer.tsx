@@ -1,26 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-
-const columns = [
-  {
-    title: "Services",
-    links: [
-      { href: "#services", label: "FDM Printing" },
-      { href: "#services", label: "Resin Printing" },
-      { href: "#services", label: "Prototyping" },
-      { href: "#services", label: "Small Batch" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { href: "#process", label: "Process" },
-      { href: "#materials", label: "Materials" },
-      { href: "#work", label: "Work" },
-      { href: "#faq", label: "FAQ" },
-    ],
-  },
-];
+import { BrushStroke } from "@/components/art/BrushStroke";
+import { navLinks } from "@/lib/data";
 
 const socials = [
   { label: "Instagram", href: "#" },
@@ -30,53 +11,79 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-border">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid grid-cols-2 gap-12 md:grid-cols-4">
-          <div className="col-span-2 md:col-span-2">
-            <Logo />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-muted">
-              Precision 3D printing for prototypes, functional parts and
-              small-batch production.
+    <footer className="ink-panel relative z-10 overflow-hidden">
+      <div className="pointer-events-none absolute -top-6 left-0 h-16 w-[140%] opacity-30">
+        <BrushStroke variant="band" color="rgba(243,239,230,0.35)" className="h-full w-full" animate={false} />
+      </div>
+
+      <div className="mx-auto max-w-[86rem] px-6 py-20 lg:px-10">
+        <div className="grid grid-cols-1 gap-14 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <Logo tone="paper" />
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-paper/55">
+              A small print studio. Digital models in, finished objects out —
+              prototypes, functional parts and short production runs.
             </p>
+            <Link
+              href="/quote"
+              className="ink-link mt-8 inline-block font-display text-2xl text-paper transition-colors hover:text-vermilion-bright"
+            >
+              Start a project →
+            </Link>
           </div>
 
-          {columns.map((col) => (
-            <div key={col.title}>
-              <h3 className="text-xs font-medium uppercase tracking-wider text-text-faint">
-                {col.title}
-              </h3>
-              <ul className="mt-4 space-y-3">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className="text-sm text-text-muted transition-colors hover:text-text"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
+          <div className="md:col-span-3 md:col-start-7">
+            <h3 className="font-mono text-[0.6rem] tracked-label text-paper/40">Pages</h3>
+            <ul className="mt-5 space-y-3">
+              {navLinks.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-sm text-paper/70 transition-colors hover:text-vermilion-bright"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/quote" className="text-sm text-paper/70 transition-colors hover:text-vermilion-bright">
+                  Quote
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="md:col-span-3">
+            <h3 className="font-mono text-[0.6rem] tracked-label text-paper/40">Studio</h3>
+            <ul className="mt-5 space-y-3 text-sm text-paper/70">
+              <li>
+                <a href="mailto:studio@caliprint.example.com" className="transition-colors hover:text-vermilion-bright">
+                  studio@caliprint.example.com
+                </a>
+              </li>
+              <li>Mon – Fri, 9 – 18</li>
+              <li className="flex gap-4 pt-2">
+                {socials.map((s) => (
+                  <Link
+                    key={s.label}
+                    href={s.href}
+                    className="font-mono text-[0.6rem] tracked-label text-paper/50 transition-colors hover:text-vermilion-bright"
+                  >
+                    {s.label}
+                  </Link>
                 ))}
-              </ul>
-            </div>
-          ))}
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-14 flex flex-col-reverse items-center justify-between gap-6 border-t border-border pt-8 md:flex-row">
-          <p className="text-xs text-text-faint">
-            © {new Date().getFullYear()} CaliPrint. All rights reserved.
+        <div className="mt-20 flex flex-col-reverse items-start justify-between gap-4 border-t border-paper/12 pt-8 sm:flex-row sm:items-center">
+          <p className="font-mono text-[0.6rem] tracked-label text-paper/35">
+            © {new Date().getFullYear()} CaliPrint
           </p>
-          <div className="flex items-center gap-6">
-            {socials.map((s) => (
-              <Link
-                key={s.label}
-                href={s.href}
-                className="text-xs text-text-muted transition-colors hover:text-text"
-              >
-                {s.label}
-              </Link>
-            ))}
-          </div>
+          <p className="font-mono text-[0.6rem] tracked-label text-paper/35">
+            Ideas, made solid
+          </p>
         </div>
       </div>
     </footer>

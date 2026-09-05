@@ -1,13 +1,15 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
+const routes = ["", "/work", "/services", "/materials", "/process", "/studio", "/quote"];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: SITE_URL,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-  ];
+  const lastModified = new Date();
+
+  return routes.map((route) => ({
+    url: `${SITE_URL}${route}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: route === "" ? 1 : 0.7,
+  }));
 }

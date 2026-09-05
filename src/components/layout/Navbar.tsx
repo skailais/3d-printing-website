@@ -1,25 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
-
-const links = [
-  { href: "#services", label: "Services" },
-  { href: "#process", label: "Process" },
-  { href: "#materials", label: "Materials" },
-  { href: "#work", label: "Work" },
-  { href: "#faq", label: "FAQ" },
-];
+import { navLinks } from "@/lib/data";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -32,56 +27,82 @@ export default function Navbar() {
     };
   }, [open]);
 
+  /* Sub-pages open on an ink-dark header, so the bar has to invert until the
+     paper background slides in behind it on scroll. */
+  const overInk = pathname !== "/" && !scrolled;
+
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <motion.div
         initial={false}
         animate={{
-          backgroundColor: scrolled
-            ? "color-mix(in srgb, var(--bg-elevated) 70%, transparent)"
-            : "transparent",
-          borderColor: scrolled ? "var(--border)" : "transparent",
+          backgroundColor: scrolled ? "rgba(243,239,230,0.92)" : "rgba(243,239,230,0)",
+          borderBottomColor: scrolled ? "rgba(22,19,15,0.14)" : "rgba(22,19,15,0)",
         }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="border-b backdrop-blur-xl"
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="border-b backdrop-blur-md"
       >
-        <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
-          <Link href="#top" className="focus-ring">
-            <Logo />
+        <nav className="mx-auto flex h-20 max-w-[86rem] items-center justify-between px-6 lg:px-10">
+          <Link href="/" className="focus-ring" aria-label="CaliPrint — home">
+            <Logo tone={overInk ? "paper" : "ink"} />
           </Link>
 
-          <ul className="hidden items-center gap-9 md:flex">
-            {links.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="text-sm text-text-muted transition-colors hover:text-text focus-ring"
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
+          <ul className="hidden items-center gap-10 lg:flex">
+            {navLinks.map((l) => {
+              const active = pathname === l.href;
+              return (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    data-active={active}
+                    className={`ink-link focus-ring font-mono text-[0.68rem] tracked-label transition-colors duration-500 ${
+                      active
+                        ? overInk
+                          ? "text-vermilion-bright"
+                          : "text-vermilion"
+                        : overInk
+                          ? "text-paper/70 hover:text-vermilion-bright"
+                          : "text-ink-soft hover:text-vermilion"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
-          <div className="hidden md:block">
-            <Button href="#quote" variant="outline" className="!px-5 !py-2.5 text-[0.83rem]">
-              Get a Quote
+          <div className="hidden lg:block">
+            <Button
+              href="/quote"
+              variant={overInk ? "paper" : "ink"}
+              className="!px-6 !py-3 !text-[0.68rem]"
+            >
+              Request a Quote
             </Button>
           </div>
 
           <button
-            aria-label="Toggle menu"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="relative z-50 flex h-9 w-9 flex-col items-center justify-center gap-1.5 md:hidden focus-ring"
+            className="focus-ring relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-2 lg:hidden"
           >
             <motion.span
-              animate={open ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
-              className="h-px w-5 bg-text"
+              animate={
+                open || overInk
+                  ? { rotate: open ? 45 : 0, y: open ? 5 : 0, backgroundColor: "#f3efe6" }
+                  : { rotate: 0, y: 0, backgroundColor: "#16130f" }
+              }
+              className="h-px w-6"
             />
             <motion.span
-              animate={open ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
-              className="h-px w-5 bg-text"
+              animate={
+                open || overInk
+                  ? { rotate: open ? -45 : 0, y: open ? -5 : 0, backgroundColor: "#f3efe6" }
+                  : { rotate: 0, y: 0, backgroundColor: "#16130f" }
+              }
+              className="h-px w-6"
             />
           </button>
         </nav>
@@ -90,30 +111,48 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="glass border-b border-border md:hidden"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            className="ink-panel fixed inset-0 z-40 flex flex-col justify-center px-8 lg:hidden"
           >
-            <ul className="flex flex-col gap-1 px-6 py-6">
-              {links.map((l) => (
-                <li key={l.href}>
+            <ul className="flex flex-col gap-1">
+              {navLinks.map((l, i) => (
+                <motion.li
+                  key={l.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
                   <Link
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="block py-3 text-lg text-text-muted transition-colors hover:text-text"
+                    className="flex items-baseline gap-4 py-3 font-display text-4xl text-paper transition-colors hover:text-vermilion-bright"
                   >
+                    <span className="font-mono text-[0.6rem] text-paper/35">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                     {l.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
-              <li className="pt-3">
-                <Button href="#quote" variant="primary" className="w-full" onClick={() => setOpen(false)}>
-                  Get a Quote
-                </Button>
-              </li>
             </ul>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="mt-12"
+            >
+              <Button
+                href="/quote"
+                variant="vermilion"
+                className="w-full"
+                onClick={() => setOpen(false)}
+              >
+                Request a Quote
+              </Button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

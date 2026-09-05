@@ -1,25 +1,21 @@
-import Hero from "@/components/sections/Hero";
-import Services from "@/components/sections/Services";
-import HowItWorks from "@/components/sections/HowItWorks";
-import Materials from "@/components/sections/Materials";
-import Portfolio from "@/components/sections/Portfolio";
-import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import QuoteUpload from "@/components/sections/QuoteUpload";
-import FAQ from "@/components/sections/FAQ";
-import FinalCTA from "@/components/sections/FinalCTA";
+import HomeHero from "@/components/sections/HomeHero";
+import Manifesto from "@/components/sections/Manifesto";
+import ServicesPreview from "@/components/sections/ServicesPreview";
+import WorkPreview from "@/components/sections/WorkPreview";
+import MaterialsMarquee from "@/components/sections/MaterialsMarquee";
+import StatsBand from "@/components/sections/StatsBand";
+import CTASection from "@/components/sections/CTASection";
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <Services />
-      <HowItWorks />
-      <Materials />
-      <Portfolio />
-      <WhyChooseUs />
-      <QuoteUpload />
-      <FAQ />
-      <FinalCTA />
+      <HomeHero />
+      <Manifesto />
+      <ServicesPreview />
+      <WorkPreview />
+      <MaterialsMarquee />
+      <StatsBand />
+      <CTASection />
     </>
   );
 }

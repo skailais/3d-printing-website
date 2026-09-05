@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Geist, Geist_Mono, Shippori_Mincho } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
@@ -15,16 +15,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const shippori = Shippori_Mincho({
+  variable: "--font-shippori",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Professional 3D Printing`,
+    default: `${SITE_NAME} — Print Studio`,
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -37,11 +37,9 @@ export const metadata: Metadata = {
     "small batch production",
     "custom parts",
   ],
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
-    title: `${SITE_NAME} — Professional 3D Printing`,
+    title: `${SITE_NAME} — Print Studio`,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
@@ -49,13 +47,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Professional 3D Printing`,
+    title: `${SITE_NAME} — Print Studio`,
     description: SITE_DESCRIPTION,
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#06070a",
+  themeColor: "#f3efe6",
   width: "device-width",
   initialScale: 1,
 };
@@ -64,11 +62,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${shippori.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col relative">
-        <div className="atmosphere" aria-hidden="true" />
-        <div className="grain" aria-hidden="true" />
+      <body className="relative flex min-h-full flex-col bg-paper">
+        <div className="washi" aria-hidden="true" />
         <Navbar />
         <main className="relative z-10 flex-1">{children}</main>
         <Footer />

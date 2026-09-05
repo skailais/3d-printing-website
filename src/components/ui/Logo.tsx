@@ -1,40 +1,56 @@
-export function LogoMark({ className = "h-7 w-7" }: { className?: string }) {
+export function LogoMark({
+  className = "h-8 w-8",
+  color = "currentColor",
+}: {
+  className?: string;
+  color?: string;
+}) {
   return (
-    <svg
-      viewBox="0 0 40 40"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle
-        cx="20"
-        cy="14"
-        r="9.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        className="text-accent"
+    <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden="true">
+      {/* a small ensō: nearly closed, tapered, with a dry gap at the top-right */}
+      <path
+        d="M31 8.5 A17 17 0 1 1 14.5 34.5"
+        stroke={color}
+        strokeWidth="3.4"
+        strokeLinecap="round"
       />
-      <circle cx="20" cy="14" r="6.5" fill="currentColor" className="text-bg" />
-      <line
-        x1="20"
-        y1="23.5"
-        x2="20"
-        y2="37"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        className="text-accent"
+      <path
+        d="M14 34 A17 17 0 0 0 21 39.4"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        opacity="0.55"
       />
-      <circle cx="20" cy="14" r="2" fill="currentColor" className="text-accent" />
+      <circle cx="24" cy="24" r="3.4" fill="var(--vermilion)" />
     </svg>
   );
 }
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({
+  className = "",
+  tone = "ink",
+}: {
+  className?: string;
+  tone?: "ink" | "paper";
+}) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <LogoMark />
-      <span className="font-display text-[1.05rem] font-semibold tracking-tight text-text">
-        CaliPrint
+    <span className={`inline-flex items-center gap-3 ${className}`}>
+      <LogoMark className={tone === "paper" ? "h-8 w-8 text-paper" : "h-8 w-8 text-ink"} />
+      <span className="flex flex-col leading-none">
+        <span
+          className={`font-display text-[1.15rem] font-semibold tracking-tight ${
+            tone === "paper" ? "text-paper" : "text-ink"
+          }`}
+        >
+          CaliPrint
+        </span>
+        <span
+          className={`mt-1 font-mono text-[0.55rem] tracked-label ${
+            tone === "paper" ? "text-paper/50" : "text-ink-faint"
+          }`}
+        >
+          Print Studio
+        </span>
       </span>
     </span>
   );
