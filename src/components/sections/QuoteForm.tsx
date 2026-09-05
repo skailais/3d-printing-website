@@ -95,6 +95,9 @@ export default function QuoteForm() {
             >
               {/* dropzone */}
               <Reveal>
+                {/* The whole panel is the drop target, but only the inner
+                    button is focusable — a role="button" wrapper holding the
+                    per-file remove buttons would be invalid nesting. */}
                 <div
                   onDragOver={(e) => {
                     e.preventDefault();
@@ -102,17 +105,7 @@ export default function QuoteForm() {
                   }}
                   onDragLeave={() => setDragging(false)}
                   onDrop={onDrop}
-                  onClick={() => inputRef.current?.click()}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      inputRef.current?.click();
-                    }
-                  }}
-                  role="button"
-                  tabIndex={0}
-                  aria-label="Upload your model file"
-                  className={`focus-ring group relative flex min-h-[24rem] cursor-pointer flex-col items-center justify-center gap-6 border p-10 text-center transition-all duration-500 ${
+                  className={`relative flex min-h-[24rem] flex-col items-center justify-center gap-6 border p-10 text-center transition-all duration-500 ${
                     dragging
                       ? "border-vermilion bg-vermilion/5"
                       : "border-dashed border-ink/25 hover:border-ink/45 hover:bg-paper-warm/50"
@@ -127,26 +120,35 @@ export default function QuoteForm() {
                     onChange={(e) => addFiles(e.target.files)}
                   />
 
-                  <motion.div
-                    animate={{ y: dragging ? -6 : 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="flex h-16 w-16 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-500 group-hover:border-vermilion group-hover:text-vermilion"
+                  <button
+                    type="button"
+                    onClick={() => inputRef.current?.click()}
+                    className="focus-ring group flex cursor-pointer flex-col items-center gap-6"
                   >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="h-6 w-6">
-                      <path d="M12 17V4M12 4l-5 5M12 4l5 5" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M4 17v1.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V17" strokeLinecap="round" />
-                    </svg>
-                  </motion.div>
+                    <motion.span
+                      aria-hidden="true"
+                      animate={{ y: dragging ? -6 : 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex h-16 w-16 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors duration-500 group-hover:border-vermilion group-hover:text-vermilion"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="h-6 w-6">
+                        <path d="M12 17V4M12 4l-5 5M12 4l5 5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M4 17v1.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V17" strokeLinecap="round" />
+                      </svg>
+                    </motion.span>
 
-                  <div>
-                    <p className="font-display text-2xl text-ink">Drop your model here</p>
-                    <p className="mt-2 font-mono text-[0.58rem] tracked-label text-ink-faint">
-                      STL · OBJ · STEP — or click to browse
-                    </p>
-                  </div>
+                    <span className="block">
+                      <span className="block font-display text-2xl text-ink">
+                        Drop your model here
+                      </span>
+                      <span className="mt-2 block font-mono text-[0.58rem] tracked-label text-ink-faint">
+                        STL · OBJ · STEP — or click to browse
+                      </span>
+                    </span>
+                  </button>
 
                   {files.length > 0 && (
-                    <ul className="mt-2 w-full max-w-sm space-y-2 text-left">
+                    <ul aria-live="polite" className="mt-2 w-full max-w-sm space-y-2 text-left">
                       {files.map((f, i) => (
                         <li
                           key={`${f.name}-${i}`}
@@ -160,10 +162,9 @@ export default function QuoteForm() {
                             <button
                               type="button"
                               aria-label={`Remove ${f.name}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setFiles((prev) => prev.filter((_, idx) => idx !== i));
-                              }}
+                              onClick={() =>
+                                setFiles((prev) => prev.filter((_, idx) => idx !== i))
+                              }
                               className="focus-ring text-ink-faint transition-colors hover:text-vermilion"
                             >
                               ×
