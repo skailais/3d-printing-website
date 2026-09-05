@@ -15,13 +15,18 @@ export default function WorkGallery() {
     <section className="relative py-20 sm:py-28">
       <div className="mx-auto max-w-[86rem] px-6 lg:px-10">
         {/* filter rail */}
-        <div className="mb-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-b border-rule pb-6">
+        <div
+          role="group"
+          aria-label="Filter work by category"
+          className="mb-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-b border-rule pb-6"
+        >
           {categories.map((c) => {
             const isActive = active === c;
             return (
               <button
                 key={c}
                 onClick={() => setActive(c)}
+                aria-pressed={isActive}
                 className={`focus-ring relative pb-1 font-mono text-[0.62rem] tracked-label transition-colors ${
                   isActive ? "text-vermilion" : "text-ink-muted hover:text-ink"
                 }`}
@@ -54,7 +59,7 @@ export default function WorkGallery() {
                 transition={{ duration: 0.55, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 className={i % 5 === 0 ? "sm:col-span-2 lg:col-span-2" : ""}
               >
-                <WorkCard item={item} index={i} tall={i % 5 !== 0} />
+                <WorkCard item={item} index={i} tall={i % 5 !== 0} headingLevel={2} />
               </motion.div>
             ))}
           </AnimatePresence>

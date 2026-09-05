@@ -10,12 +10,17 @@ export function WorkCard({
   index,
   className,
   tall = false,
+  headingLevel = 3,
 }: {
   item: WorkItem;
   index: number;
   className?: string;
   tall?: boolean;
+  /** 3 under a section heading, 2 on the gallery page where the cards sit
+   *  directly beneath the page h1. */
+  headingLevel?: 2 | 3;
 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <motion.article
       whileHover="hover"
@@ -58,9 +63,9 @@ export function WorkCard({
         <span className="font-mono text-[0.58rem] tracked-label text-vermilion">
           {item.category}
         </span>
-        <h3 className="mt-3 font-display text-xl font-semibold leading-snug tracking-tight text-ink transition-colors duration-500 group-hover:text-vermilion">
+        <Heading className="mt-3 font-display text-xl font-semibold leading-snug tracking-tight text-ink transition-colors duration-500 group-hover:text-vermilion">
           {item.title}
-        </h3>
+        </Heading>
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.note}</p>
       </div>
     </motion.article>

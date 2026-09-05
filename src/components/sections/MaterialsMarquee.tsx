@@ -11,11 +11,11 @@ export default function MaterialsMarquee() {
     <section className="relative overflow-hidden border-y border-rule py-20">
       <Reveal>
         <div className="mb-10 flex items-center justify-center gap-4 px-6">
-          <span className="h-px w-10 bg-vermilion" />
-          <span className="font-mono text-[0.62rem] tracked-label text-vermilion">
+          <span className="h-px w-10 bg-vermilion" aria-hidden="true" />
+          <h2 className="font-mono text-[0.62rem] tracked-label text-vermilion">
             Materials
-          </span>
-          <span className="h-px w-10 bg-vermilion" />
+          </h2>
+          <span className="h-px w-10 bg-vermilion" aria-hidden="true" />
         </div>
       </Reveal>
 

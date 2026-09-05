@@ -62,9 +62,9 @@ export default function StudioContent() {
         <InkWash pigment="jade" size={560} style={{ bottom: "-14rem", right: "-8rem" }} />
 
         <div className="relative mx-auto max-w-[86rem] px-6 lg:px-10">
-          <span className="font-mono text-[0.62rem] tracked-label text-vermilion-bright">
+          <h2 className="font-mono text-[0.62rem] tracked-label text-vermilion-bright">
             How we work
-          </span>
+          </h2>
 
           <RevealGroup className="mt-14 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10">
             {principles.map((p, i) => (
@@ -85,8 +85,11 @@ export default function StudioContent() {
       </section>
 
       {/* contact */}
-      <section className="relative py-24 sm:py-32">
+      <section className="relative py-24 sm:py-32" aria-labelledby="studio-contact">
         <div className="mx-auto max-w-[86rem] px-6 lg:px-10">
+          <h2 id="studio-contact" className="sr-only">
+            Contact the studio
+          </h2>
           <div className="grid grid-cols-1 gap-12 border-t border-rule pt-12 md:grid-cols-3">
             <Reveal>
               <div>
