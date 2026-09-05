@@ -93,8 +93,14 @@ export function InkLandscape({
         className="absolute left-1/2 top-[14%] h-40 w-40 -translate-x-1/2 sm:h-56 sm:w-56"
       >
         <svg viewBox="0 0 200 200" className="h-full w-full">
-          <circle cx="100" cy="100" r="72" fill={discPigment} opacity="0.16" />
-          <circle cx="100" cy="100" r="72" fill="none" stroke={discPigment} strokeWidth="1.4" opacity="0.5" />
+          <defs>
+            <radialGradient id={`disc-${id}`}>
+              <stop offset="55%" stopColor={discPigment} stopOpacity="0.2" />
+              <stop offset="88%" stopColor={discPigment} stopOpacity="0.1" />
+              <stop offset="100%" stopColor={discPigment} stopOpacity="0" />
+            </radialGradient>
+          </defs>
+          <circle cx="100" cy="100" r="80" fill={`url(#disc-${id})`} />
         </svg>
       </motion.div>
 
@@ -115,13 +121,19 @@ export function InkLandscape({
           </motion.g>
         ))}
 
-        {/* fog caught between the ranges */}
+        {/* fog caught between the ranges — thin bands, or it smudges */}
         <g filter={`url(#${soft})`} fill="var(--paper)">
-          <ellipse cx="330" cy="368" rx="300" ry="18" opacity="0.55" />
-          <ellipse cx="980" cy="404" rx="360" ry="16" opacity="0.5" />
-          <ellipse cx="640" cy="452" rx="420" ry="14" opacity="0.4" />
+          <ellipse cx="330" cy="368" rx="300" ry="9" opacity="0.42" />
+          <ellipse cx="980" cy="404" rx="360" ry="8" opacity="0.38" />
+          <ellipse cx="640" cy="452" rx="420" ry="7" opacity="0.3" />
         </g>
       </svg>
+
+      {/* dissolve the foot of the range into the paper below */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+        style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
+      />
 
       <motion.svg
         style={{ x: birdsX }}
