@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Enso } from "@/components/art/Enso";
 import { InkWash } from "@/components/art/InkWash";
 import { BrushStroke } from "@/components/art/BrushStroke";
@@ -17,10 +17,14 @@ export default function HomeHero() {
     offset: ["start start", "end start"],
   });
 
-  const ensoY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const ensoRotate = useTransform(scrollYProgress, [0, 1], [0, 14]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-14%"]);
-  const washY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  /* Scroll-linked values sit outside MotionConfig's reach, so the parallax is
+     flattened by hand when reduced motion is asked for. */
+  const reduce = useReducedMotion();
+
+  const ensoY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "22%"]);
+  const ensoRotate = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 14]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-14%"]);
+  const washY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "40%"]);
 
   return (
     <section

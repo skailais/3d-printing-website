@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 /**
  * A sumi-e landscape assembled from separately-parallaxing ridge layers:
@@ -59,17 +59,22 @@ export function InkLandscape({
   const rough = `land-rough-${id}`;
   const soft = `land-soft-${id}`;
 
+  /* Scroll-linked motion values are not covered by MotionConfig, so the
+     parallax has to be flattened here for anyone who asked for less of it. */
+  const reduce = useReducedMotion();
+  const depth = (units: number) => (reduce ? 0 : units);
+
   /* Hooks cannot be called in a loop body, so the four depths are declared up
      front and handed to the ridges in order. These are viewBox user units,
      not percentages — percentage transforms on SVG groups are unreliable. */
-  const y0 = useTransform(scrollYProgress, [0, 1], [0, 18]);
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, 34]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 56]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, 84]);
+  const y0 = useTransform(scrollYProgress, [0, 1], [0, depth(18)]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, depth(34)]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, depth(56)]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [0, depth(84)]);
   const layerY = [y0, y1, y2, y3];
 
-  const discY = useTransform(scrollYProgress, [0, 1], ["0%", "-24%"]);
-  const birdsX = useTransform(scrollYProgress, [0, 1], ["-4%", "10%"]);
+  const discY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-24%"]);
+  const birdsX = useTransform(scrollYProgress, [0, 1], [reduce ? "0%" : "-4%", reduce ? "0%" : "10%"]);
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`} aria-hidden="true">
