@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -26,6 +26,45 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  /* The menu is a modal sheet, so it takes focus when it opens and hands it
+     back to the toggle when it closes. */
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+  }, [open]);
+
+  const closeMenu = useCallback(() => {
+    setOpen(false);
+    toggleRef.current?.focus();
+  }, []);
+
+  const onPanelKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeMenu();
+      return;
+    }
+    if (e.key !== "Tab") return;
+
+    /* keep Tab inside the sheet while it is open */
+    const focusable = panelRef.current?.querySelectorAll<HTMLElement>("a[href], button");
+    if (!focusable || focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
 
   /* Sub-pages open on an ink-dark header, so the bar has to invert until the
      paper background slides in behind it on scroll. */
@@ -83,9 +122,11 @@ export default function Navbar() {
           </div>
 
           <button
+            ref={toggleRef}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
+            aria-controls="mobile-menu"
+            onClick={() => (open ? closeMenu() : setOpen(true))}
             className="focus-ring relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-2 lg:hidden"
           >
             <motion.span
@@ -111,6 +152,12 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={panelRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            onKeyDown={onPanelKeyDown}
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
