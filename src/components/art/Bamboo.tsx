@@ -59,23 +59,29 @@ function Leaves({ x, y, dir, scale }: { x: number; y: number; dir: 1 | -1; scale
 export function Bamboo({
   className = "",
   color = "var(--ink)",
+  rough: roughen = true,
 }: {
   className?: string;
   color?: string;
+  /** Turn off where the stand is drawn faintly — the broken edge cannot be
+   *  seen at low opacity and the filter is not worth paying for. */
+  rough?: boolean;
 }) {
   const id = useId().replace(/:/g, "");
   const rough = `bamboo-${id}`;
 
   return (
     <svg viewBox="0 0 200 640" fill="none" className={className} aria-hidden="true">
-      <defs>
-        <filter id={rough} x="-20%" y="-6%" width="140%" height="112%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.04 0.012" numOctaves="3" seed="4" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
+      {roughen && (
+        <defs>
+          <filter id={rough} x="-20%" y="-6%" width="140%" height="112%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04 0.012" numOctaves="3" seed="4" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      )}
 
-      <g filter={`url(#${rough})`}>
+      <g filter={roughen ? `url(#${rough})` : undefined}>
         {stalks.map((s, i) => (
           <g key={i} fill={color} opacity={s.opacity}>
             {/* the culm, drawn as segments so the nodes read as gaps */}

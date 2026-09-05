@@ -19,7 +19,9 @@ const geistMono = Geist_Mono({
 const shippori = Shippori_Mincho({
   variable: "--font-shippori",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  /* 400 for plain display text, 500 and 600 for headings — 700 is unused, and
+     each weight is a separate file for a non-variable face. */
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {

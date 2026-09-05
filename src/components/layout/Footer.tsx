@@ -19,7 +19,7 @@ export default function Footer() {
 
       {/* bamboo standing at the right edge of the ink */}
       <div className="pointer-events-none absolute -right-6 bottom-0 top-0 hidden w-56 opacity-[0.14] md:block lg:right-4 lg:w-64">
-        <Bamboo className="h-full w-full" color="var(--paper)" />
+        <Bamboo className="h-full w-full" color="var(--paper)" rough={false} />
       </div>
 
       <div className="mx-auto max-w-[86rem] px-6 py-20 lg:px-10">
