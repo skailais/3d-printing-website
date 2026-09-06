@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChromeGate from "@/components/layout/ChromeGate";
 import MotionProvider from "@/components/MotionProvider";
+import PageViews from "@/components/PageViews";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="relative flex min-h-full flex-col bg-paper">
         <div className="washi" aria-hidden="true" />
+        <PageViews />
         <MotionProvider>
           <ChromeGate>
             <Navbar />

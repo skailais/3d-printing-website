@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { materialDemand } from "@/lib/admin-demo-data";
 
 /* One measure across categories, so one hue — a colour per bar would imply an
    identity the data does not have. */
 const HUE = "#17a394";
 
-export default function MaterialBars() {
+export default function MaterialBars({
+  materials: materialDemand,
+}: {
+  materials: { name: string; count: number }[];
+}) {
   const [hover, setHover] = useState<string | null>(null);
-  const max = Math.max(...materialDemand.map((m) => m.count));
+  const max = Math.max(1, ...materialDemand.map((m) => m.count));
   const total = materialDemand.reduce((n, m) => n + m.count, 0);
 
   return (
@@ -17,6 +20,12 @@ export default function MaterialBars() {
       <figcaption className="mb-5 font-display text-lg text-paper">
         Material requested
       </figcaption>
+
+      {materialDemand.length === 0 && (
+        <p className="text-sm leading-relaxed text-paper/45">
+          Nothing requested yet — this fills in as quotes arrive.
+        </p>
+      )}
 
       <ul className="space-y-2.5">
         {materialDemand.map((m) => {

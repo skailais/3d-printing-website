@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start -H 0.0.0.0 -p 4000",
+    "serve": "next build && next start -H 0.0.0.0 -p 4000",
+    "lint": "eslint",
+    "setup:admin": "node scripts/setup-admin.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

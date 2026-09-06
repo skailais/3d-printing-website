@@ -20,16 +20,21 @@ const fieldClass =
 
 const labelClass = "font-mono text-[0.58rem] tracked-label text-ink-faint";
 
+/** Mirrors the server's limits so the form can refuse early. */
+const MAX_FILES = 5;
+
 export default function QuoteForm() {
   const [files, setFiles] = useState<File[]>([]);
   const [dragging, setDragging] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [reference, setReference] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const addFiles = useCallback((list: FileList | null) => {
     if (!list) return;
-    setFiles((prev) => [...prev, ...Array.from(list)]);
+    setFiles((prev) => [...prev, ...Array.from(list)].slice(0, MAX_FILES));
   }, []);
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -38,9 +43,32 @@ export default function QuoteForm() {
     addFiles(e.dataTransfer.files);
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+
+    setSending(true);
+    setError(null);
+
+    const body = new FormData(e.currentTarget);
+    // the picker input is outside the form's field set, so attach by hand
+    body.delete("files");
+    files.forEach((file) => body.append("files", file));
+
+    try {
+      const response = await fetch("/api/quotes", { method: "POST", body });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setError(payload.error ?? "Something went wrong. Please try again.");
+        return;
+      }
+      setReference(payload.ref ?? null);
+    } catch {
+      setError("Could not reach the studio. Check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -50,7 +78,7 @@ export default function QuoteForm() {
 
       <div className="relative mx-auto max-w-[74rem] px-6 lg:px-10">
         <AnimatePresence mode="wait">
-          {submitted ? (
+          {reference ? (
             <motion.div
               key="sent"
               initial={{ opacity: 0, y: 20 }}
@@ -75,13 +103,17 @@ export default function QuoteForm() {
                 We will look at your geometry and come back with pricing and a
                 date — usually the same working day.
               </p>
+              <p className="mt-6 font-mono text-[0.62rem] tracked-label text-ink-soft">
+                Your reference · <span className="text-vermilion">{reference}</span>
+              </p>
               <Button
                 variant="outline"
                 className="mt-10"
                 onClick={() => {
-                  setSubmitted(false);
+                  setReference(null);
                   setFiles([]);
                   setQuantity(1);
+                  setError(null);
                 }}
               >
                 Send another
@@ -193,7 +225,7 @@ export default function QuoteForm() {
                   <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
                     <label className="flex flex-col gap-2">
                       <span className={labelClass}>Material</span>
-                      <select className={`${fieldClass} appearance-none`} defaultValue={materials[0].name}>
+                      <select name="material" className={`${fieldClass} appearance-none`} defaultValue={materials[0].name}>
                         {materials.map((m) => (
                           <option key={m.name} value={m.name}>
                             {m.name}
@@ -215,6 +247,7 @@ export default function QuoteForm() {
                         </button>
                         <input
                           type="number"
+                          name="quantity"
                           min={1}
                           aria-label="Quantity"
                           value={quantity}
@@ -235,27 +268,38 @@ export default function QuoteForm() {
 
                   <label className="flex flex-col gap-2">
                     <span className={labelClass}>Name</span>
-                    <input type="text" required placeholder="Your name" className={fieldClass} />
+                    <input type="text" name="name" required placeholder="Your name" className={fieldClass} />
                   </label>
 
                   <label className="flex flex-col gap-2">
                     <span className={labelClass}>Email</span>
-                    <input type="email" required placeholder="you@example.com" className={fieldClass} />
+                    <input type="email" name="email" required placeholder="you@example.com" className={fieldClass} />
                   </label>
 
                   <label className="flex flex-col gap-2">
                     <span className={labelClass}>What are you making?</span>
                     <textarea
                       rows={3}
+                      name="comment"
                       placeholder="A sentence is plenty."
                       className={`${fieldClass} resize-none`}
                     />
                   </label>
 
                   <div>
-                    <Button variant="ink" className="w-full sm:w-auto">
-                      Request a Quote
+                    <Button variant="ink" className="w-full sm:w-auto" disabled={sending}>
+                      {sending ? "Sending…" : "Request a Quote"}
                     </Button>
+
+                    {error && (
+                      <p
+                        role="alert"
+                        className="mt-4 border-l-2 border-vermilion pl-3 text-sm text-vermilion"
+                      >
+                        {error}
+                      </p>
+                    )}
+
                     <p className="mt-4 text-xs text-ink-faint">
                       No account, no obligation. We reply to every file.
                     </p>

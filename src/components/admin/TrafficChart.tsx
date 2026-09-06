@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { traffic, type TrafficDay } from "@/lib/admin-demo-data";
+import type { DailyTraffic } from "@/lib/server/analytics";
 
 /* Series colours: the studio's jade and vermilion lifted onto the ink ground.
    Validated for the six checks against surface #1a1a19 — lightness band,
@@ -21,18 +21,19 @@ function niceTop(max: number) {
   return Math.ceil(max / step) * step;
 }
 
-export default function TrafficChart() {
+export default function TrafficChart({ traffic }: { traffic: DailyTraffic[] }) {
   const [hover, setHover] = useState<number | null>(null);
 
   const { max, x, y, paths } = useMemo(() => {
-    const max = niceTop(Math.max(...traffic.flatMap((d) => [d.views, d.sessions])));
+    const peak = Math.max(1, ...traffic.flatMap((d) => [d.views, d.sessions]));
+    const max = niceTop(peak);
     const innerW = W - PAD.left - PAD.right;
     const innerH = H - PAD.top - PAD.bottom;
 
-    const x = (i: number) => PAD.left + (i / (traffic.length - 1)) * innerW;
+    const x = (i: number) => PAD.left + (i / Math.max(traffic.length - 1, 1)) * innerW;
     const y = (v: number) => PAD.top + innerH - (v / max) * innerH;
 
-    const line = (key: keyof Pick<TrafficDay, "views" | "sessions">) =>
+    const line = (key: "views" | "sessions") =>
       traffic.map((d, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(d[key]).toFixed(1)}`).join(" ");
 
     return {
@@ -45,7 +46,7 @@ export default function TrafficChart() {
         viewsArea: `${line("views")} L${x(traffic.length - 1)},${y(0)} L${x(0)},${y(0)} Z`,
       },
     };
-  }, []);
+  }, [traffic]);
 
   const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => Math.round(max * t));
   const active = hover === null ? null : traffic[hover];
