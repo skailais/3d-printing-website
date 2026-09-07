@@ -58,18 +58,31 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3efe6",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3efe6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0b09" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
+
+/**
+ * Applies the saved theme before the first paint. Anything later — an effect,
+ * a layout pass — and the wrong ground flashes up for a frame.
+ */
+const noFlashTheme = `(function(){try{var t=localStorage.getItem('caliprint-theme');if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t}}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${shippori.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="relative flex min-h-full flex-col bg-paper">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: noFlashTheme }} />
+      </head>
+      <body className="relative flex min-h-full flex-col bg-surface">
         <div className="washi" aria-hidden="true" />
         <PageViews />
         <MotionProvider>

@@ -24,7 +24,7 @@ export default function LandscapeBand() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-15% 0px" }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-md font-display text-2xl leading-[1.5] tracking-tight text-ink sm:text-[1.75rem]"
+            className="max-w-md font-display text-2xl leading-[1.5] tracking-tight text-body sm:text-[1.75rem]"
           >
             A part is built the way a range is drawn — one stroke at a time,
             each one committed.

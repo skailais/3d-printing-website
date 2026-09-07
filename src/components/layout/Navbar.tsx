@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { navLinks } from "@/lib/data";
 
 export default function Navbar() {
@@ -72,15 +73,15 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      {/* opacity rather than a literal colour, so the bar follows the theme */}
       <motion.div
         initial={false}
-        animate={{
-          backgroundColor: scrolled ? "rgba(243,239,230,0.92)" : "rgba(243,239,230,0)",
-          borderBottomColor: scrolled ? "rgba(22,19,15,0.14)" : "rgba(22,19,15,0)",
-        }}
+        animate={{ opacity: scrolled ? 1 : 0 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="border-b backdrop-blur-md"
-      >
+        aria-hidden="true"
+        className="absolute inset-0 border-b border-rule bg-surface/92 backdrop-blur-md"
+      />
+      <div className="relative">
         <nav className="mx-auto flex h-20 max-w-[86rem] items-center justify-between px-6 lg:px-10">
           <Link href="/" className="focus-ring" aria-label="CaliPrint — home">
             <Logo tone={overInk ? "paper" : "ink"} />
@@ -101,7 +102,7 @@ export default function Navbar() {
                           : "text-vermilion"
                         : overInk
                           ? "text-paper/70 hover:text-vermilion-bright"
-                          : "text-ink-soft hover:text-vermilion"
+                          : "text-body-soft hover:text-vermilion"
                     }`}
                   >
                     {l.label}
@@ -111,7 +112,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-4 lg:flex">
+            <ThemeToggle tone={overInk ? "paper" : "ink"} />
             <Button
               href="/quote"
               variant={overInk ? "paper" : "ink"}
@@ -119,6 +121,10 @@ export default function Navbar() {
             >
               Request a Quote
             </Button>
+          </div>
+
+          <div className="flex items-center gap-1 lg:hidden">
+            <ThemeToggle tone={open || overInk ? "paper" : "ink"} />
           </div>
 
           <button
@@ -129,25 +135,19 @@ export default function Navbar() {
             onClick={() => (open ? closeMenu() : setOpen(true))}
             className="focus-ring relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-2 lg:hidden"
           >
+            {/* over the ink header the bars must be pale; otherwise they take
+                the theme's stroke colour */}
             <motion.span
-              animate={
-                open || overInk
-                  ? { rotate: open ? 45 : 0, y: open ? 5 : 0, backgroundColor: "#f3efe6" }
-                  : { rotate: 0, y: 0, backgroundColor: "#16130f" }
-              }
-              className="h-px w-6"
+              animate={{ rotate: open ? 45 : 0, y: open ? 5 : 0 }}
+              className={`h-px w-6 ${open || overInk ? "bg-paper" : "bg-stroke"}`}
             />
             <motion.span
-              animate={
-                open || overInk
-                  ? { rotate: open ? -45 : 0, y: open ? -5 : 0, backgroundColor: "#f3efe6" }
-                  : { rotate: 0, y: 0, backgroundColor: "#16130f" }
-              }
-              className="h-px w-6"
+              animate={{ rotate: open ? -45 : 0, y: open ? -5 : 0 }}
+              className={`h-px w-6 ${open || overInk ? "bg-paper" : "bg-stroke"}`}
             />
           </button>
         </nav>
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {open && (

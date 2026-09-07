@@ -53,8 +53,8 @@ function Flower({ bloom, petal, heart }: { bloom: Bloom; petal: string; heart: s
  */
 export function BlossomBranch({
   className = "",
-  branchColor = "var(--ink)",
-  petalColor = "var(--paper-warm)",
+  branchColor = "var(--stroke)",
+  petalColor = "var(--surface-warm)",
   heartColor = "var(--vermilion)",
   animate = true,
 }: {

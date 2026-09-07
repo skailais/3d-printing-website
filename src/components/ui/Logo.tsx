@@ -35,18 +35,18 @@ export function Logo({
 }) {
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>
-      <LogoMark className={tone === "paper" ? "h-8 w-8 text-paper" : "h-8 w-8 text-ink"} />
+      <LogoMark className={tone === "paper" ? "h-8 w-8 text-paper" : "h-8 w-8 text-body"} />
       <span className="flex flex-col leading-none">
         <span
           className={`font-display text-[1.15rem] font-semibold tracking-tight ${
-            tone === "paper" ? "text-paper" : "text-ink"
+            tone === "paper" ? "text-paper" : "text-body"
           }`}
         >
           CaliPrint
         </span>
         <span
           className={`mt-1 font-mono text-[0.55rem] tracked-label ${
-            tone === "paper" ? "text-paper/65" : "text-ink-faint"
+            tone === "paper" ? "text-paper/65" : "text-body-faint"
           }`}
         >
           Print Studio

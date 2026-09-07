@@ -10,7 +10,7 @@ const flock = [
 /** A few gull strokes — two arcs each, the way a brush suggests a bird. */
 export function Birds({
   className = "",
-  color = "var(--ink)",
+  color = "var(--stroke)",
   opacity = 0.5,
 }: {
   className?: string;

@@ -58,7 +58,7 @@ function Leaves({ x, y, dir, scale }: { x: number; y: number; dir: 1 | -1; scale
  */
 export function Bamboo({
   className = "",
-  color = "var(--ink)",
+  color = "var(--stroke)",
   rough: roughen = true,
 }: {
   className?: string;
@@ -94,7 +94,7 @@ export function Bamboo({
                 width={s.width * 1.56}
                 height={Math.max(2.4, s.width * 0.22)}
                 rx={1.5}
-                fill="var(--paper)"
+                fill="var(--surface)"
                 opacity={0.85}
               />
             ))}

@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
  */
 export function Enso({
   className = "",
-  color = "var(--ink)",
+  color = "var(--stroke)",
   draw = true,
   strokeWidth = 7,
 }: {

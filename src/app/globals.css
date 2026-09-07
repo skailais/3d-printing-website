@@ -1,27 +1,106 @@
 @import "tailwindcss";
 
+/*
+ * Two kinds of colour live here.
+ *
+ * Pigments (--paper, --ink, --vermilion …) are fixed: paper is always the pale
+ * one, ink always the dark one. The ink-panel bands are built from them, so
+ * those sections read the same in either theme and need no per-theme classes.
+ *
+ * Surface tokens (--surface, --body, --stroke …) are what actually flip. In
+ * the light theme the page is washi with ink drawn on it; in the dark theme it
+ * is sumi with the strokes left pale — the same drawing, the other way round.
+ */
 :root {
-  /* paper */
+  color-scheme: light;
+
+  /* pigments — constant across themes */
   --paper: #f3efe6;
   --paper-deep: #e8e1d2;
   --paper-warm: #faf7f0;
-
-  /* ink — every step clears WCAG AA (4.5:1) on the paper ground, since the
-     small tracked labels use the faintest of them */
   --ink: #16130f;
-  --ink-soft: #2e2a23;
-  --ink-muted: #5a5548;
-  --ink-faint: #6b6558;
 
-  /* pigments */
   --vermilion: #bb4029;
   --vermilion-bright: #e15a3c;
   --jade: #1d6b66;
   --jade-light: #3e9c94;
   --gold: #b08a46;
 
+  /* the page */
+  --surface: #f3efe6;
+  --surface-warm: #faf7f0;
+  --surface-deep: #e8e1d2;
+
+  /* text on the page — every step clears WCAG AA (4.5:1) on this surface,
+     since the small tracked labels use the faintest of them */
+  --body: #16130f;
+  --body-soft: #2e2a23;
+  --body-muted: #5a5548;
+  --body-faint: #6b6558;
+
+  /* what a brush lays down on the page */
+  --stroke: #16130f;
+
   --rule: rgba(22, 19, 15, 0.14);
   --rule-strong: rgba(22, 19, 15, 0.32);
+
+  /* Pale washes on a dark ground cover far more than dark washes on paper —
+     the same painting reads twice as heavy inverted. This thins it back. */
+  --art-alpha: 1;
+
+  /* kept as aliases: art and panels still speak in ink */
+  --ink-soft: var(--body-soft);
+  --ink-muted: var(--body-muted);
+  --ink-faint: var(--body-faint);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --surface: #0d0b09;
+    --surface-warm: #14110e;
+    --surface-deep: #090807;
+
+    --body: #ece7dc;
+    --body-soft: #d3ccbf;
+    --body-muted: #a49b8c;
+    --body-faint: #8b8274;
+
+    --stroke: #e6e0d4;
+
+    /* pigments lift off the dark ground, or they go muddy */
+    --vermilion: #e15a3c;
+    --jade: #2f9d92;
+    --gold: #c9a227;
+
+    --rule: rgba(236, 231, 220, 0.14);
+    --rule-strong: rgba(236, 231, 220, 0.3);
+    --art-alpha: 0.68;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface: #0d0b09;
+  --surface-warm: #14110e;
+  --surface-deep: #090807;
+
+  --body: #ece7dc;
+  --body-soft: #d3ccbf;
+  --body-muted: #a49b8c;
+  --body-faint: #8b8274;
+
+  --stroke: #e6e0d4;
+
+  --vermilion: #e15a3c;
+  --jade: #2f9d92;
+  --gold: #c9a227;
+
+  --rule: rgba(236, 231, 220, 0.14);
+  --rule-strong: rgba(236, 231, 220, 0.3);
+  --art-alpha: 0.68;
 }
 
 @theme inline {
@@ -39,6 +118,15 @@
   --color-gold: var(--gold);
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
+
+  --color-surface: var(--surface);
+  --color-surface-warm: var(--surface-warm);
+  --color-surface-deep: var(--surface-deep);
+  --color-body: var(--body);
+  --color-body-soft: var(--body-soft);
+  --color-body-muted: var(--body-muted);
+  --color-body-faint: var(--body-faint);
+  --color-stroke: var(--stroke);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -75,7 +163,7 @@
 }
 
 html {
-  background: var(--paper);
+  background: var(--surface);
   scroll-behavior: smooth;
 }
 
@@ -86,8 +174,8 @@ html {
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--surface);
+  color: var(--body);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -111,6 +199,18 @@ body {
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23f)' opacity='0.5'/></svg>");
   background-size: 220px 220px;
+}
+
+/* multiply disappears into a dark ground — the fibre has to catch light instead */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .washi {
+    mix-blend-mode: soft-light;
+    opacity: 0.5;
+  }
+}
+:root[data-theme="dark"] .washi {
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
 }
 
 /* ---- type ---- */
@@ -144,8 +244,13 @@ body {
 }
 
 .paper-card {
-  background: linear-gradient(160deg, var(--paper-warm) 0%, var(--paper-deep) 130%);
+  background: linear-gradient(160deg, var(--surface-warm) 0%, var(--surface-deep) 130%);
   border: 1px solid var(--rule);
+}
+
+/* the painted pieces, thinned on the dark ground */
+.sumi-art {
+  opacity: var(--art-alpha);
 }
 
 /* soft, blurred pigment cloud */

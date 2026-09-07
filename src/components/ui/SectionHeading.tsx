@@ -36,7 +36,7 @@ export function SectionHeading({
         <h2
           className={clsx(
             "relative mt-5 font-display text-4xl font-semibold leading-[1.12] tracking-tight text-balance sm:text-5xl md:text-[3.4rem]",
-            onPaper ? "text-paper" : "text-ink"
+            onPaper ? "text-paper" : "text-body"
           )}
         >
           {title}
@@ -59,7 +59,7 @@ export function SectionHeading({
           <p
             className={clsx(
               "mt-6 text-[0.98rem] leading-relaxed text-balance",
-              onPaper ? "text-paper/65" : "text-ink-muted"
+              onPaper ? "text-paper/65" : "text-body-muted"
             )}
           >
             {subtitle}

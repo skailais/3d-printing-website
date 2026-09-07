@@ -25,10 +25,10 @@ export default function MaterialsMarquee() {
             <Link
               key={`${m.name}-${i}`}
               href="/materials"
-              className="flex shrink-0 items-baseline gap-4 font-display text-4xl font-medium tracking-tight text-ink/75 transition-colors duration-300 hover:text-vermilion sm:text-5xl"
+              className="flex shrink-0 items-baseline gap-4 font-display text-4xl font-medium tracking-tight text-body/75 transition-colors duration-300 hover:text-vermilion sm:text-5xl"
             >
               {m.name}
-              <span className="font-mono text-[0.55rem] tracked-label text-ink-faint">
+              <span className="font-mono text-[0.55rem] tracked-label text-body-faint">
                 {m.traits[0]}
               </span>
             </Link>
@@ -41,18 +41,18 @@ export default function MaterialsMarquee() {
           {row.map((m, i) => (
             <span
               key={`ghost-${m.name}-${i}`}
-              className="flex shrink-0 items-baseline gap-4 font-display text-4xl font-medium tracking-tight text-ink/75 sm:text-5xl"
+              className="flex shrink-0 items-baseline gap-4 font-display text-4xl font-medium tracking-tight text-body/75 sm:text-5xl"
             >
               {m.name}
-              <span className="font-mono text-[0.55rem] tracked-label text-ink-faint">
+              <span className="font-mono text-[0.55rem] tracked-label text-body-faint">
                 {m.traits[0]}
               </span>
             </span>
           ))}
         </div>
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-paper to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-paper to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-surface to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface to-transparent" />
       </div>
     </section>
   );

@@ -94,7 +94,7 @@ export function PageHeader({
       >
         <path
           d="M0,96 V54 C120,34 210,62 320,58 C452,53 520,26 640,32 C762,38 826,72 950,68 C1064,64 1130,34 1240,36 C1330,38 1380,54 1440,46 V96 Z"
-          fill="var(--paper)"
+          fill="var(--surface)"
         />
       </svg>
     </header>

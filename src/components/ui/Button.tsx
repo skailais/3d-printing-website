@@ -8,10 +8,13 @@ const base =
   "group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-none px-7 py-3.5 text-[0.82rem] tracked-label font-medium transition-all duration-500 focus-ring whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
-  ink: "bg-ink text-paper hover:bg-vermilion",
-  vermilion: "bg-vermilion text-paper-warm hover:bg-ink",
+  /* the solid button is drawn in the stroke colour, so it inverts with the
+     theme: dark on washi, pale on sumi */
+  ink: "bg-stroke text-surface hover:bg-vermilion hover:text-paper-warm",
+  vermilion: "bg-vermilion text-paper-warm hover:bg-stroke hover:text-surface",
   outline:
-    "border border-ink/25 text-ink hover:border-vermilion hover:text-vermilion",
+    "border border-stroke/25 text-body hover:border-vermilion hover:text-vermilion",
+  /* always pale on a dark panel, so its label stays ink in both themes */
   paper: "bg-paper text-ink hover:bg-vermilion hover:text-paper-warm",
 };
 

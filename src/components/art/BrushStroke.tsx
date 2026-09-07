@@ -22,7 +22,7 @@ const viewBoxes = {
 
 export function BrushStroke({
   variant = "swash",
-  color = "var(--ink)",
+  color = "var(--stroke)",
   className = "",
   animate = true,
   opacity = 1,

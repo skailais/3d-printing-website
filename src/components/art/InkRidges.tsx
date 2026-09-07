@@ -18,8 +18,10 @@ export function InkRidges({
   const id = useId().replace(/:/g, "");
   const rough = `ridges-${id}`;
   const soft = `ridges-soft-${id}`;
-  const stroke = tone === "paper" ? "var(--paper)" : "var(--ink)";
-  const mist = tone === "paper" ? "var(--ink)" : "var(--paper)";
+  const stroke = tone === "paper" ? "var(--paper)" : "var(--stroke)";
+  /* mist is whatever the ground is: ink inside a panel, the page surface
+     outside one — so it always reads as haze rather than a smear */
+  const mist = tone === "paper" ? "var(--ink)" : "var(--surface)";
 
   const layers = [
     {
@@ -36,8 +38,16 @@ export function InkRidges({
     },
   ];
 
+  /* Only the page-ground version thins with the theme; on an ink panel the
+     ridges sit on the same dark either way. */
   return (
-    <svg viewBox="0 0 640 220" preserveAspectRatio="none" fill="none" className={className} aria-hidden="true">
+    <svg
+      viewBox="0 0 640 220"
+      preserveAspectRatio="none"
+      fill="none"
+      className={`${tone === "paper" ? "" : "sumi-art"} ${className}`}
+      aria-hidden="true"
+    >
       <defs>
         <filter id={rough} x="-5%" y="-15%" width="110%" height="130%">
           <feTurbulence type="fractalNoise" baseFrequency="0.008 0.04" numOctaves="3" seed="19" result="n" />

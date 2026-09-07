@@ -28,7 +28,7 @@ export default function WorkGallery() {
                 onClick={() => setActive(c)}
                 aria-pressed={isActive}
                 className={`focus-ring relative pb-1 font-mono text-[0.62rem] tracked-label transition-colors ${
-                  isActive ? "text-vermilion" : "text-ink-muted hover:text-ink"
+                  isActive ? "text-vermilion" : "text-body-muted hover:text-body"
                 }`}
               >
                 {c}
@@ -42,7 +42,7 @@ export default function WorkGallery() {
               </button>
             );
           })}
-          <span className="ml-auto font-mono text-[0.58rem] tracked-label text-ink-faint">
+          <span className="ml-auto font-mono text-[0.58rem] tracked-label text-body-faint">
             {shown.length} {shown.length === 1 ? "piece" : "pieces"}
           </span>
         </div>

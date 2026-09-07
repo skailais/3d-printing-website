@@ -34,16 +34,16 @@ export default function ServicesList() {
                     <span className="font-mono text-[0.62rem] tracked-label text-vermilion">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h2 className="font-display text-3xl font-semibold tracking-tight text-ink transition-colors duration-500 group-hover:text-vermilion sm:text-4xl">
+                    <h2 className="font-display text-3xl font-semibold tracking-tight text-body transition-colors duration-500 group-hover:text-vermilion sm:text-4xl">
                       {s.title}
                     </h2>
                   </div>
 
                   <div className="md:col-span-5">
-                    <p className="text-[1.02rem] leading-relaxed text-ink-soft">
+                    <p className="text-[1.02rem] leading-relaxed text-body-soft">
                       {s.description}
                     </p>
-                    <p className="mt-4 text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-4 text-sm leading-relaxed text-body-muted">
                       {s.detail}
                     </p>
                   </div>
@@ -53,10 +53,10 @@ export default function ServicesList() {
                   <dl className="flex gap-10 md:col-span-2 md:flex-col md:gap-5">
                     {s.specs.map((spec) => (
                       <div key={spec.label}>
-                        <dt className="font-mono text-[0.55rem] tracked-label text-ink-faint">
+                        <dt className="font-mono text-[0.55rem] tracked-label text-body-faint">
                           {spec.label}
                         </dt>
-                        <dd className="mt-2 font-display text-base text-ink">{spec.value}</dd>
+                        <dd className="mt-2 font-display text-base text-body">{spec.value}</dd>
                       </div>
                     ))}
                   </dl>

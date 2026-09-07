@@ -18,7 +18,7 @@ export default function ServicesPreview() {
           />
           <Link
             href="/services"
-            className="ink-link font-mono text-[0.66rem] tracked-label text-ink-soft transition-colors hover:text-vermilion"
+            className="ink-link font-mono text-[0.66rem] tracked-label text-body-soft transition-colors hover:text-vermilion"
           >
             All services →
           </Link>
@@ -33,7 +33,7 @@ export default function ServicesPreview() {
                   whileHover="hover"
                   animate="rest"
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative flex h-full flex-col justify-between overflow-hidden bg-paper p-8 transition-colors duration-500 group-hover:bg-paper-warm sm:p-10"
+                  className="relative flex h-full flex-col justify-between overflow-hidden bg-surface p-8 transition-colors duration-500 group-hover:bg-surface-warm sm:p-10"
                 >
                   {/* pigment blooming from the corner on hover */}
                   <span
@@ -51,17 +51,17 @@ export default function ServicesPreview() {
                   </motion.span>
 
                   <div className="relative flex items-start justify-between gap-6">
-                    <h3 className="font-display text-2xl font-semibold tracking-tight text-ink">
+                    <h3 className="font-display text-2xl font-semibold tracking-tight text-body">
                       {s.title}
                     </h3>
-                    <span className="font-mono text-[0.6rem] text-ink-faint">
+                    <span className="font-mono text-[0.6rem] text-body-faint">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
-                  <p className="relative mt-20 text-sm leading-relaxed text-ink-muted">
+                  <p className="relative mt-20 text-sm leading-relaxed text-body-muted">
                     {s.description}
                   </p>
-                  <span className="relative mt-6 inline-block h-px w-10 bg-ink/25 transition-all duration-500 group-hover:w-20 group-hover:bg-vermilion" />
+                  <span className="relative mt-6 inline-block h-px w-10 bg-stroke/25 transition-all duration-500 group-hover:w-20 group-hover:bg-vermilion" />
                 </motion.div>
               </Link>
             </RevealItem>

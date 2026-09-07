@@ -21,14 +21,14 @@ export default function StudioContent() {
               <span className="font-mono text-[0.62rem] tracked-label text-vermilion">
                 The idea
               </span>
-              <p className="mt-7 font-display text-3xl font-medium leading-[1.4] tracking-tight text-ink sm:text-[2.4rem]">
+              <p className="mt-7 font-display text-3xl font-medium leading-[1.4] tracking-tight text-body sm:text-[2.4rem]">
                 A printer is a brush. The file is only the intention — what
                 matters is the hand that sets it down.
               </p>
               <div className="mt-8 h-5 w-48">
-                <BrushStroke variant="swash" color="var(--ink)" className="h-full w-full" opacity={0.8} />
+                <BrushStroke variant="swash" color="var(--stroke)" className="h-full w-full" opacity={0.8} />
               </div>
-              <p className="mt-8 max-w-lg text-[1rem] leading-relaxed text-ink-muted">
+              <p className="mt-8 max-w-lg text-[1rem] leading-relaxed text-body-muted">
                 We started with one machine in a back room and a stubborn dislike
                 of parts that arrive looking like they were made by an accident.
                 Everything since has been an argument for care: fewer jobs,
@@ -46,7 +46,7 @@ export default function StudioContent() {
                 transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0"
               >
-                <Enso className="h-full w-full" color="var(--ink)" strokeWidth={6} />
+                <Enso className="h-full w-full" color="var(--stroke)" strokeWidth={6} />
               </motion.div>
               {/* a branch coming into flower across the circle */}
               <div className="absolute -bottom-6 -left-10 w-[112%]">
@@ -93,10 +93,10 @@ export default function StudioContent() {
           <div className="grid grid-cols-1 gap-12 border-t border-rule pt-12 md:grid-cols-3">
             <Reveal>
               <div>
-                <h3 className="font-mono text-[0.58rem] tracked-label text-ink-faint">Write</h3>
+                <h3 className="font-mono text-[0.58rem] tracked-label text-body-faint">Write</h3>
                 <a
                   href="mailto:studio@caliprint.example.com"
-                  className="ink-link mt-5 inline-block font-display text-2xl text-ink transition-colors hover:text-vermilion"
+                  className="ink-link mt-5 inline-block font-display text-2xl text-body transition-colors hover:text-vermilion"
                 >
                   studio@caliprint.example.com
                 </a>
@@ -104,8 +104,8 @@ export default function StudioContent() {
             </Reveal>
             <Reveal delay={0.08}>
               <div>
-                <h3 className="font-mono text-[0.58rem] tracked-label text-ink-faint">Visit</h3>
-                <p className="mt-5 font-display text-2xl leading-snug text-ink">
+                <h3 className="font-mono text-[0.58rem] tracked-label text-body-faint">Visit</h3>
+                <p className="mt-5 font-display text-2xl leading-snug text-body">
                   By appointment,
                   <br />
                   Mon – Fri, 9 – 18
@@ -114,8 +114,8 @@ export default function StudioContent() {
             </Reveal>
             <Reveal delay={0.16}>
               <div>
-                <h3 className="font-mono text-[0.58rem] tracked-label text-ink-faint">Lead time</h3>
-                <p className="mt-5 font-display text-2xl leading-snug text-ink">
+                <h3 className="font-mono text-[0.58rem] tracked-label text-body-faint">Lead time</h3>
+                <p className="mt-5 font-display text-2xl leading-snug text-body">
                   24 – 72 hours
                   <br />
                   for most parts

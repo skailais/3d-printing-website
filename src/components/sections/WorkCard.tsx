@@ -54,7 +54,7 @@ export function WorkCard({
           }}
         />
 
-        <span className="absolute left-5 top-5 font-mono text-[0.58rem] tracked-label text-ink-faint">
+        <span className="absolute left-5 top-5 font-mono text-[0.58rem] tracked-label text-body-faint">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
@@ -63,10 +63,10 @@ export function WorkCard({
         <span className="font-mono text-[0.58rem] tracked-label text-vermilion">
           {item.category}
         </span>
-        <Heading className="mt-3 font-display text-xl font-semibold leading-snug tracking-tight text-ink transition-colors duration-500 group-hover:text-vermilion">
+        <Heading className="mt-3 font-display text-xl font-semibold leading-snug tracking-tight text-body transition-colors duration-500 group-hover:text-vermilion">
           {item.title}
         </Heading>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.note}</p>
+        <p className="mt-2 text-sm leading-relaxed text-body-muted">{item.note}</p>
       </div>
     </motion.article>
   );

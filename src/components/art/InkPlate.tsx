@@ -8,7 +8,7 @@ const pigmentColor = {
   jade: "var(--jade)",
   vermilion: "var(--vermilion)",
   gold: "var(--gold)",
-  ink: "var(--ink)",
+  ink: "var(--stroke)",
 } as const;
 
 export type Pigment = keyof typeof pigmentColor;
@@ -32,7 +32,7 @@ function Mountains({ ink, accent }: { ink: string; accent: string }) {
           opacity="0.8"
         />
       </g>
-      <g fill="var(--paper)" opacity="0.6">
+      <g fill="var(--surface)" opacity="0.6">
         <ellipse cx="150" cy="250" rx="130" ry="7" />
         <ellipse cx="220" cy="276" rx="110" ry="5" />
       </g>
@@ -59,7 +59,7 @@ function BambooScene({ ink, accent }: { ink: string; accent: string }) {
               y={n}
               width={c.w * 1.6}
               height="3"
-              fill="var(--paper)"
+              fill="var(--surface)"
               opacity="0.9"
             />
           ))}
@@ -109,7 +109,7 @@ function Blossom({ ink, accent }: { ink: string; accent: string }) {
               cy={b.y - b.r * 0.62}
               rx={b.r * 0.44}
               ry={b.r * 0.62}
-              fill="var(--paper-warm)"
+              fill="var(--surface-warm)"
               stroke={ink}
               strokeWidth="0.7"
               opacity="0.95"
@@ -189,7 +189,7 @@ function Vessel({ ink, accent }: { ink: string; accent: string }) {
         {/* the glaze break, left as bare paper */}
         <path
           d="M104,190 C108,158 128,134 156,124 C136,142 122,166 118,196 C114,228 124,252 144,266 C118,256 100,226 104,190 Z"
-          fill="var(--paper-warm)"
+          fill="var(--surface-warm)"
           opacity="0.5"
         />
       </g>
@@ -233,10 +233,10 @@ export function InkPlate({
   const soft = `plate-soft-${id}`;
   const Composition = scenes[scene];
   const accent = pigmentColor[pigment];
-  const ink = pigment === "ink" ? "var(--ink)" : pigmentColor[pigment];
+  const ink = pigment === "ink" ? "var(--stroke)" : pigmentColor[pigment];
 
   return (
-    <svg viewBox="0 0 320 320" fill="none" className={className} aria-hidden="true">
+    <svg viewBox="0 0 320 320" fill="none" className={`sumi-art ${className}`} aria-hidden="true">
       {!ornament && (
         <defs>
           <filter id={rough} x="-12%" y="-12%" width="124%" height="124%">

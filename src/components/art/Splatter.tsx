@@ -18,7 +18,7 @@ const specks = [
 
 export function Splatter({
   className = "",
-  color = "var(--ink)",
+  color = "var(--stroke)",
   animate = true,
 }: {
   className?: string;

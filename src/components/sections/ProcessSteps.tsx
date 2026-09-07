@@ -42,13 +42,13 @@ export default function ProcessSteps() {
                   </div>
 
                   <div className="sm:col-span-6">
-                    <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                    <h2 className="font-display text-3xl font-semibold tracking-tight text-body sm:text-4xl">
                       {step.title}
                     </h2>
-                    <p className="mt-5 text-[1.02rem] leading-relaxed text-ink-soft">
+                    <p className="mt-5 text-[1.02rem] leading-relaxed text-body-soft">
                       {step.description}
                     </p>
-                    <p className="mt-4 text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-4 text-sm leading-relaxed text-body-muted">
                       {step.detail}
                     </p>
                   </div>

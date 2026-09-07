@@ -11,7 +11,7 @@ export default function WorkPreview() {
   const featured = work.slice(0, 3);
 
   return (
-    <section className="relative bg-paper-deep/60 py-28 sm:py-36">
+    <section className="relative bg-surface-deep/60 py-28 sm:py-36">
       <div className="mx-auto max-w-[86rem] px-6 lg:px-10">
         <SectionHeading
           eyebrow="Selected work"
@@ -31,7 +31,7 @@ export default function WorkPreview() {
           <div className="mt-14 flex justify-center">
             <Link
               href="/work"
-              className="group inline-flex items-center gap-3 font-display text-2xl text-ink transition-colors hover:text-vermilion"
+              className="group inline-flex items-center gap-3 font-display text-2xl text-body transition-colors hover:text-vermilion"
             >
               See the full gallery
               <motion.span

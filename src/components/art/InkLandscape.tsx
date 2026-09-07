@@ -117,12 +117,12 @@ export function InkLandscape({
 
         {ridges.map((ridge, i) => (
           <motion.g key={i} style={{ y: layerY[i] }}>
-            <path d={ridge.d} fill="var(--ink)" opacity={ridge.opacity} filter={`url(#${rough})`} />
+            <path d={ridge.d} fill="var(--stroke)" opacity={ridge.opacity} filter={`url(#${rough})`} />
           </motion.g>
         ))}
 
         {/* fog caught between the ranges — thin bands, or it smudges */}
-        <g filter={`url(#${soft})`} fill="var(--paper)">
+        <g filter={`url(#${soft})`} fill="var(--surface)">
           <ellipse cx="330" cy="368" rx="300" ry="9" opacity="0.42" />
           <ellipse cx="980" cy="404" rx="360" ry="8" opacity="0.38" />
           <ellipse cx="640" cy="452" rx="420" ry="7" opacity="0.3" />
@@ -132,7 +132,7 @@ export function InkLandscape({
       {/* dissolve the foot of the range into the paper below */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-        style={{ background: "linear-gradient(to bottom, transparent, var(--paper))" }}
+        style={{ background: "linear-gradient(to bottom, transparent, var(--surface))" }}
       />
 
       <motion.svg

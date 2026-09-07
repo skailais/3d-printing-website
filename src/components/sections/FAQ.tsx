@@ -26,12 +26,12 @@ function Row({
         aria-expanded={isOpen}
         className="focus-ring group flex w-full items-baseline gap-6 py-7 text-left"
       >
-        <span className="font-mono text-[0.58rem] tracked-label text-ink-faint">
+        <span className="font-mono text-[0.58rem] tracked-label text-body-faint">
           {String(index + 1).padStart(2, "0")}
         </span>
         <span
           className={`flex-1 font-display text-xl tracking-tight transition-colors duration-300 sm:text-2xl ${
-            isOpen ? "text-vermilion" : "text-ink group-hover:text-vermilion"
+            isOpen ? "text-vermilion" : "text-body group-hover:text-vermilion"
           }`}
         >
           {question}
@@ -39,7 +39,7 @@ function Row({
         <motion.span
           animate={{ rotate: isOpen ? 90 : 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="shrink-0 text-ink-muted"
+          className="shrink-0 text-body-muted"
           aria-hidden="true"
         >
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.2" className="h-5 w-5">
@@ -57,7 +57,7 @@ function Row({
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <p className="max-w-2xl pb-8 pl-12 pr-8 text-[0.95rem] leading-relaxed text-ink-muted">
+            <p className="max-w-2xl pb-8 pl-12 pr-8 text-[0.95rem] leading-relaxed text-body-muted">
               {answer}
             </p>
           </motion.div>

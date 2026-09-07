@@ -9,7 +9,7 @@ const pigmentInk = {
   jade: "var(--jade)",
   vermilion: "var(--vermilion)",
   gold: "var(--gold)",
-  ink: "var(--ink)",
+  ink: "var(--stroke)",
 } as const;
 
 export default function MaterialsGrid() {
@@ -23,7 +23,7 @@ export default function MaterialsGrid() {
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
-                className="group relative flex h-full min-h-[17rem] flex-col justify-between overflow-hidden bg-paper p-8"
+                className="group relative flex h-full min-h-[17rem] flex-col justify-between overflow-hidden bg-surface p-8"
               >
                 {/* pigment flooding the card from the base */}
                 <motion.span
@@ -39,7 +39,7 @@ export default function MaterialsGrid() {
 
                 <div className="relative">
                   <div className="flex items-start justify-between">
-                    <span className="font-mono text-[0.55rem] tracked-label text-ink-faint">
+                    <span className="font-mono text-[0.55rem] tracked-label text-body-faint">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <motion.span
@@ -68,15 +68,15 @@ export default function MaterialsGrid() {
                 </div>
 
                 <div className="relative">
-                  <h2 className="font-display text-3xl font-semibold tracking-tight text-ink">
+                  <h2 className="font-display text-3xl font-semibold tracking-tight text-body">
                     {m.name}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-ink-muted">{m.note}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-body-muted">{m.note}</p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {m.traits.map((t) => (
                       <span
                         key={t}
-                        className="border border-ink/15 px-2.5 py-1 font-mono text-[0.55rem] tracked-label text-ink-soft"
+                        className="border border-stroke/15 px-2.5 py-1 font-mono text-[0.55rem] tracked-label text-body-soft"
                       >
                         {t}
                       </span>

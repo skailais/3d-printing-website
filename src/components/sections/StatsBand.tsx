@@ -10,14 +10,14 @@ export default function StatsBand() {
         <RevealGroup className="grid grid-cols-1 gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s) => (
             <RevealItem key={s.label}>
-              <div className="group h-full bg-paper px-8 py-12 transition-colors duration-500 hover:bg-paper-warm">
-                <span className="block font-display text-5xl font-semibold tracking-tight text-ink transition-colors duration-500 group-hover:text-vermilion sm:text-6xl">
+              <div className="group h-full bg-surface px-8 py-12 transition-colors duration-500 hover:bg-surface-warm">
+                <span className="block font-display text-5xl font-semibold tracking-tight text-body transition-colors duration-500 group-hover:text-vermilion sm:text-6xl">
                   {s.value}
                 </span>
-                <span className="mt-5 block font-mono text-[0.6rem] tracked-label text-ink-soft">
+                <span className="mt-5 block font-mono text-[0.6rem] tracked-label text-body-soft">
                   {s.label}
                 </span>
-                <span className="mt-3 block text-sm leading-relaxed text-ink-muted">
+                <span className="mt-3 block text-sm leading-relaxed text-body-muted">
                   {s.note}
                 </span>
               </div>

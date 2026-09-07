@@ -28,7 +28,7 @@ export default function CTASection({
       >
         <path
           d="M0,0 H1440 V44 C1330,58 1268,30 1160,34 C1042,38 986,70 866,66 C742,62 686,28 566,32 C452,36 392,66 278,62 C170,58 104,32 0,42 Z"
-          fill="var(--paper)"
+          fill="var(--surface)"
         />
       </svg>
       <InkWash pigment="vermilion" size={620} style={{ top: "-14rem", left: "50%", marginLeft: "-19rem" }} />
