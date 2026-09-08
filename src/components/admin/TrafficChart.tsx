@@ -66,7 +66,11 @@ export default function TrafficChart({ traffic }: { traffic: DailyTraffic[] }) {
         </span>
       </figcaption>
 
-      <div className="relative">
+      {/* The viewBox is 900 units wide; letting it shrink to a phone's width
+          scales the 9px axis labels down to about four, which cannot be read.
+          Scrolling keeps the chart at a size its own type was drawn for. */}
+      <div className="-mx-1 overflow-x-auto px-1">
+        <div className="relative min-w-[34rem]">
         <svg
           viewBox={`0 0 ${W} ${H}`}
           className="w-full"
@@ -176,8 +180,9 @@ export default function TrafficChart({ traffic }: { traffic: DailyTraffic[] }) {
                 <span className="ml-auto font-display text-sm text-paper">{active[s.key]}</span>
               </div>
             ))}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* the same numbers, reachable without hovering */}
