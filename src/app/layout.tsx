@@ -24,6 +24,15 @@ const shippori = Shippori_Mincho({
   /* 400 for plain display text, 500 and 600 for headings — 700 is unused, and
      each weight is a separate file for a non-variable face. */
   weight: ["400", "500", "600"],
+  /* Shippori Mincho is a Japanese serif. Even asking only for latin, the
+     family is sliced into about a hundred unicode-range files per weight, and
+     preload — which defaults on — emitted a <link rel="preload"> for every
+     one: 245 of them, 7.3MB of woff2 pulled before the page could settle, for
+     a face used on headings.
+     Without the preload the browser fetches only the slices the glyphs on the
+     page actually need. Geist and Geist Mono keep their preload; they are two
+     files each and they set the body text. */
+  preload: false,
 });
 
 export const metadata: Metadata = {
