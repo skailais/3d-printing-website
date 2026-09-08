@@ -29,7 +29,12 @@ export default function QuoteForm() {
   const [reference, setReference] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState(1);
+  /* A string, not a number: the field must be able to sit briefly empty while
+     someone clears "1" to type "25", and a controlled number input that
+     snaps a blank value back to 1 on every keystroke never lets that happen —
+     the "2" lands next to the stuck 1 and reads back as "12". Clamping only
+     happens on blur and on the stepper buttons. */
+  const [quantity, setQuantity] = useState("1");
   const inputRef = useRef<HTMLInputElement>(null);
   /* The confirmation is the only thing left on screen once a request goes, so
      it should be where the reader is standing.
@@ -132,7 +137,7 @@ export default function QuoteForm() {
                 onClick={() => {
                   setReference(null);
                   setFiles([]);
-                  setQuantity(1);
+                  setQuantity("1");
                   setError(null);
                 }}
               >
@@ -264,7 +269,7 @@ export default function QuoteForm() {
                         <button
                           type="button"
                           aria-label="Decrease quantity"
-                          onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                          onClick={() => setQuantity((q) => String(Math.max(1, (Number(q) || 1) - 1)))}
                           className="focus-ring px-2 text-lg text-body-muted transition-colors hover:text-vermilion"
                         >
                           −
@@ -273,15 +278,17 @@ export default function QuoteForm() {
                           type="number"
                           name="quantity"
                           min={1}
+                          required
                           aria-label="Quantity"
                           value={quantity}
-                          onChange={(e) => setQuantity(Math.max(1, Number(e.target.value) || 1))}
+                          onChange={(e) => setQuantity(e.target.value)}
+                          onBlur={() => setQuantity((q) => String(Math.max(1, Math.floor(Number(q)) || 1)))}
                           className="w-full min-w-0 bg-transparent text-center font-display text-lg text-body outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                         />
                         <button
                           type="button"
                           aria-label="Increase quantity"
-                          onClick={() => setQuantity((q) => q + 1)}
+                          onClick={() => setQuantity((q) => String((Number(q) || 0) + 1))}
                           className="focus-ring px-2 text-lg text-body-muted transition-colors hover:text-vermilion"
                         >
                           +
