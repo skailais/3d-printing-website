@@ -34,14 +34,17 @@ function readTheme(): Theme {
 function Dial({ dark }: { dark: boolean }) {
   return (
     <svg viewBox="0 0 24 24" className="h-[1.15rem] w-[1.15rem]" aria-hidden="true">
+      {/* Animated SVG attributes need a numeric `initial`. Given only a static
+          cx/cy/r attribute to read from, Framer Motion writes "undefined" on
+          the first frame when the value has to change — which it does whenever
+          the page loads dark, since the server always renders the light dial. */}
       <defs>
         <mask id="theme-dial-mask">
           <rect width="24" height="24" fill="white" />
           <motion.circle
-            cx="24"
-            cy="6"
             r="8"
             fill="black"
+            initial={{ cx: 26, cy: 4 }}
             animate={{ cx: dark ? 17 : 26, cy: dark ? 7 : 4 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           />
@@ -51,9 +54,9 @@ function Dial({ dark }: { dark: boolean }) {
       <motion.circle
         cx="12"
         cy="12"
-        r="7"
         fill="currentColor"
         mask="url(#theme-dial-mask)"
+        initial={{ r: 6 }}
         animate={{ r: dark ? 8 : 6 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
       />

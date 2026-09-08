@@ -77,6 +77,10 @@
     --rule: rgba(236, 231, 220, 0.14);
     --rule-strong: rgba(236, 231, 220, 0.3);
     --art-alpha: 0.68;
+
+    /* The ink bands are only a few values off the dark page and stop reading
+       as bands. Lifting the pigment keeps the alternating rhythm visible. */
+    --ink: #1c1815;
   }
 }
 
@@ -101,6 +105,7 @@
   --rule: rgba(236, 231, 220, 0.14);
   --rule-strong: rgba(236, 231, 220, 0.3);
   --art-alpha: 0.68;
+  --ink: #1c1815;
 }
 
 @theme inline {
