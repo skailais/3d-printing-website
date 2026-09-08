@@ -31,6 +31,16 @@ export default function QuoteForm() {
   const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
+  /* The confirmation is the only thing left on screen once a request goes, so
+     it should be where the reader is standing.
+     A callback ref, not an effect: AnimatePresence is in "wait" mode, so when
+     `reference` changes the panel has not mounted yet and an effect firing on
+     that change finds a null ref. This runs at the moment the node attaches.
+     useCallback keeps the identity stable so it fires once per mount rather
+     than stealing focus back on every render. */
+  const sentRef = useCallback((el: HTMLDivElement | null) => {
+    el?.focus();
+  }, []);
 
   const addFiles = useCallback((list: FileList | null) => {
     if (!list) return;
@@ -79,13 +89,23 @@ export default function QuoteForm() {
       <div className="relative mx-auto max-w-[74rem] px-6 lg:px-10">
         <AnimatePresence mode="wait">
           {reference ? (
+            /* Submitting replaces the whole form with this panel. On screen
+               that reads as an answer; without a label it is silence — focus
+               falls back to the top of the document and nothing is announced,
+               so a screen-reader user cannot tell whether the request went.
+               role="status" speaks it, and taking focus puts the reader at the
+               confirmation rather than back at the page start. */
             <motion.div
               key="sent"
+              ref={sentRef}
+              role="status"
+              aria-live="polite"
+              tabIndex={-1}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex min-h-[26rem] flex-col items-center justify-center border border-rule bg-surface-warm/60 px-8 text-center"
+              className="flex min-h-[26rem] flex-col items-center justify-center border border-rule bg-surface-warm/60 px-8 text-center outline-none"
             >
               <motion.div
                 initial={{ scale: 1.5, opacity: 0, rotate: -14 }}
@@ -236,7 +256,11 @@ export default function QuoteForm() {
 
                     <div className="flex flex-col gap-2">
                       <span className={labelClass}>Quantity</span>
-                      <div className="flex items-center justify-between border-b border-stroke/20 py-2">
+                      {/* The number input drops its own outline so the stepper
+                          row reads as one control, which left a keyboard user
+                          with no idea they had landed on it. The row carries
+                          the focus mark instead. */}
+                      <div className="flex items-center justify-between border-b border-stroke/20 py-2 transition-colors focus-within:border-vermilion">
                         <button
                           type="button"
                           aria-label="Decrease quantity"
