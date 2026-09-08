@@ -63,44 +63,58 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
             const expanded = open === quote.id;
             return (
               <li key={quote.id} className="py-4">
-                <div className="grid grid-cols-[5.5rem_1fr_auto] items-start gap-4 sm:grid-cols-[6rem_1fr_8rem_7rem]">
-                  <button
-                    onClick={() => setOpen(expanded ? null : quote.id)}
-                    className="focus-ring text-left font-mono text-[0.68rem] text-paper/80 hover:text-[#e15a3c]"
-                    aria-expanded={expanded}
-                  >
-                    {quote.ref}
-                  </button>
+                {/* Four columns need a desk: 336px of the row is spoken for
+                    before the customer gets any, so at 390px the name was
+                    clipped to about seven characters and the metadata broke
+                    over four lines. Below 768px the reference and the status
+                    control share one line and the customer gets the full width
+                    underneath. The switch is md rather than sm because at 641px
+                    the grid still left the name only 151px.
 
-                  <div className="min-w-0">
+                    `md:contents` dissolves that wrapper at the breakpoint so
+                    its children become grid items directly — they are placed by
+                    column, not by source order, which is what lets the customer
+                    sit in column two while following them in the markup. */}
+                <div className="flex flex-col gap-2 md:grid md:grid-cols-[6rem_1fr_8rem_7rem] md:items-start md:gap-4">
+                  <div className="flex items-center justify-between gap-3 md:contents">
+                    <button
+                      onClick={() => setOpen(expanded ? null : quote.id)}
+                      className="focus-ring text-left font-mono text-[0.68rem] text-paper/80 hover:text-[#e15a3c] md:col-start-1 md:row-start-1"
+                      aria-expanded={expanded}
+                    >
+                      {quote.ref}
+                    </button>
+
+                    <span className="hidden md:col-start-3 md:row-start-1 md:block">
+                      <span
+                        className={`border px-2 py-1 font-mono text-[0.52rem] tracked-label ${statusTone[quote.status]}`}
+                      >
+                        {quote.status}
+                      </span>
+                    </span>
+
+                    <select
+                      aria-label={`Status for ${quote.ref}`}
+                      value={quote.status}
+                      disabled={busy === quote.id}
+                      onChange={(e) => changeStatus(quote.id, e.target.value as QuoteStatus)}
+                      className="focus-ring border border-paper/15 bg-transparent px-2 py-1.5 font-mono text-[0.58rem] tracked-label text-paper/70 md:col-start-4 md:row-start-1"
+                    >
+                      {STATUSES.map((s) => (
+                        <option key={s} value={s} className="bg-[#12100e]">
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="min-w-0 md:col-start-2 md:row-start-1">
                     <div className="truncate text-sm text-paper/90">{quote.name}</div>
                     <div className="mt-1 font-mono text-[0.58rem] text-paper/40">
                       {when(quote.receivedAt)} · {quote.material} · ×{quote.quantity}
                       {quote.files.length > 0 && ` · ${quote.files.length} file${quote.files.length > 1 ? "s" : ""}`}
                     </div>
                   </div>
-
-                  <span className="hidden sm:block">
-                    <span
-                      className={`border px-2 py-1 font-mono text-[0.52rem] tracked-label ${statusTone[quote.status]}`}
-                    >
-                      {quote.status}
-                    </span>
-                  </span>
-
-                  <select
-                    aria-label={`Status for ${quote.ref}`}
-                    value={quote.status}
-                    disabled={busy === quote.id}
-                    onChange={(e) => changeStatus(quote.id, e.target.value as QuoteStatus)}
-                    className="focus-ring border border-paper/15 bg-transparent px-2 py-1.5 font-mono text-[0.58rem] tracked-label text-paper/70"
-                  >
-                    {STATUSES.map((s) => (
-                      <option key={s} value={s} className="bg-[#12100e]">
-                        {s}
-                      </option>
-                    ))}
-                  </select>
                 </div>
 
                 {expanded && (
