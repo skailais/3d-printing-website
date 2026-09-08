@@ -28,7 +28,7 @@ function StatTile({ value, label, note }: { value: string; label: string; note: 
     <div className="border-t border-paper/15 pt-5">
       <div className="font-display text-4xl font-semibold tracking-tight text-paper">{value}</div>
       <div className="mt-3 font-mono text-[0.58rem] tracked-label text-paper/50">{label}</div>
-      <div className="mt-1.5 text-xs text-paper/40">{note}</div>
+      <div className="mt-1.5 text-xs text-paper/55">{note}</div>
     </div>
   );
 }
@@ -124,7 +124,7 @@ export default function MasterDashboard({
           <Panel>
             <h2 className="font-display text-lg text-paper">From visit to request</h2>
             {funnel[0].count === 0 ? (
-              <p className="mt-6 text-sm text-paper/45">
+              <p className="mt-6 text-sm text-paper/60">
                 Nothing to chart until the first visit is recorded.
               </p>
             ) : (
@@ -136,7 +136,7 @@ export default function MasterDashboard({
                       <div>
                         <div className="flex items-baseline justify-between gap-4">
                           <span className="text-sm text-paper/75">{step.stage}</span>
-                          <span className="font-mono text-[0.6rem] text-paper/45">
+                          <span className="font-mono text-[0.6rem] text-paper/60">
                             {pct.toFixed(1)}%
                           </span>
                         </div>

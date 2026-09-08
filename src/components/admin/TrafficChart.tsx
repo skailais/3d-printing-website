@@ -193,7 +193,7 @@ export default function TrafficChart({ traffic }: { traffic: DailyTraffic[] }) {
         <div className="mt-3 max-h-56 overflow-y-auto border border-paper/10">
           <table className="w-full text-left">
             <thead className="sticky top-0 bg-[#12100e]">
-              <tr className="font-mono text-[0.55rem] tracked-label text-paper/45">
+              <tr className="font-mono text-[0.55rem] tracked-label text-paper/60">
                 <th className="px-3 py-2 font-normal">Date</th>
                 <th className="px-3 py-2 font-normal">Views</th>
                 <th className="px-3 py-2 font-normal">Sessions</th>

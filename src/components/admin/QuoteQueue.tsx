@@ -10,8 +10,10 @@ const statusTone: Record<QuoteStatus, string> = {
   new: "text-[#e15a3c] border-[#e15a3c]/40",
   quoted: "text-[#17a394] border-[#17a394]/40",
   printing: "text-[#c9a227] border-[#c9a227]/40",
-  shipped: "text-paper/50 border-paper/20",
-  declined: "text-paper/35 border-paper/12",
+  /* /50 is the faintest step that still clears 4.5:1 on the ink ground, so
+     declined sits there and shipped keeps a visible step above it. */
+  shipped: "text-paper/65 border-paper/20",
+  declined: "text-paper/50 border-paper/12",
 };
 
 function bytes(n: number) {
@@ -53,7 +55,7 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
       <h2 className="font-display text-lg text-paper">Quote requests</h2>
 
       {quotes.length === 0 ? (
-        <p className="mt-6 text-sm leading-relaxed text-paper/45">
+        <p className="mt-6 text-sm leading-relaxed text-paper/60">
           The queue is empty. Requests sent through the quote form land here, with
           their files.
         </p>
@@ -110,7 +112,7 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
 
                   <div className="min-w-0 md:col-start-2 md:row-start-1">
                     <div className="truncate text-sm text-paper/90">{quote.name}</div>
-                    <div className="mt-1 font-mono text-[0.58rem] text-paper/40">
+                    <div className="mt-1 font-mono text-[0.58rem] text-paper/55">
                       {when(quote.receivedAt)} · {quote.material} · ×{quote.quantity}
                       {quote.files.length > 0 && ` · ${quote.files.length} file${quote.files.length > 1 ? "s" : ""}`}
                     </div>
@@ -120,7 +122,7 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
                 {expanded && (
                   <div className="mt-4 grid gap-4 border-l-2 border-[#17a394]/40 pl-5 sm:grid-cols-2">
                     <div>
-                      <div className="font-mono text-[0.55rem] tracked-label text-paper/40">
+                      <div className="font-mono text-[0.55rem] tracked-label text-paper/55">
                         Contact
                       </div>
                       <a
@@ -137,11 +139,11 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
                     </div>
 
                     <div>
-                      <div className="font-mono text-[0.55rem] tracked-label text-paper/40">
+                      <div className="font-mono text-[0.55rem] tracked-label text-paper/55">
                         Files
                       </div>
                       {quote.files.length === 0 ? (
-                        <p className="mt-2 text-sm text-paper/45">None attached.</p>
+                        <p className="mt-2 text-sm text-paper/60">None attached.</p>
                       ) : (
                         <ul className="mt-2 space-y-2">
                           {quote.files.map((file) => (
@@ -154,7 +156,7 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
                                 className="focus-ring flex items-baseline gap-3 text-sm text-paper/85 transition-colors hover:text-[#e15a3c]"
                               >
                                 <span className="ink-link truncate">{file.original}</span>
-                                <span className="shrink-0 font-mono text-[0.55rem] text-paper/40">
+                                <span className="shrink-0 font-mono text-[0.55rem] text-paper/55">
                                   {bytes(file.bytes)}
                                 </span>
                               </a>

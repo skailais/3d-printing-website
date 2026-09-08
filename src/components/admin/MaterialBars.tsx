@@ -22,7 +22,7 @@ export default function MaterialBars({
       </figcaption>
 
       {materialDemand.length === 0 && (
-        <p className="text-sm leading-relaxed text-paper/45">
+        <p className="text-sm leading-relaxed text-paper/60">
           Nothing requested yet — this fills in as quotes arrive.
         </p>
       )}

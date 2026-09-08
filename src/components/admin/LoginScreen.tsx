@@ -75,7 +75,7 @@ export default function LoginScreen({ configured }: { configured: boolean }) {
         {configured ? (
           <>
             <label className="mt-8 block text-left">
-              <span className="font-mono text-[0.55rem] tracked-label text-paper/45">
+              <span className="font-mono text-[0.55rem] tracked-label text-paper/60">
                 Password
               </span>
               <input

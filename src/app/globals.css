@@ -24,6 +24,10 @@
   --vermilion-bright: #e15a3c;
   --jade: #1d6b66;
   --jade-light: #3e9c94;
+  /* Gold is a pigment for marks and rules, not for words: on --surface it
+     reaches only 2.79:1, so text-gold would fail AA in light mode while
+     passing at 8.12 in dark. Nothing sets it on text today — this is a note
+     for whoever reaches for it first. */
   --gold: #b08a46;
 
   /* the page */
