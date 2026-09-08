@@ -42,18 +42,16 @@ export const metadata: Metadata = {
     "small batch production",
     "custom parts",
   ],
-  alternates: { canonical: "/" },
+  /* No canonical and no og:url here on purpose. Both inherit down the tree,
+     and a value set at the root is a value every page below repeats about
+     itself — pages claiming to be the home page. Each route declares its own
+     through pageMetadata(); the home page does so in app/page.tsx. */
   openGraph: {
-    title: `${SITE_NAME} — Print Studio`,
-    description: SITE_DESCRIPTION,
-    url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Print Studio`,
-    description: SITE_DESCRIPTION,
   },
 };
 

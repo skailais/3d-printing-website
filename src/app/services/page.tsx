@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import ServicesList from "@/components/sections/ServicesList";
 import CTASection from "@/components/sections/CTASection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services",
   description:
     "FDM and resin printing, prototyping, functional parts, custom projects and small-batch production.",
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

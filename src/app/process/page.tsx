@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import ProcessSteps from "@/components/sections/ProcessSteps";
 import StatsBand from "@/components/sections/StatsBand";
 import CTASection from "@/components/sections/CTASection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Process",
   description:
     "From file to finished part in four steps: send your model, choose material and finish, we print it, you receive it.",
-};
+  path: "/process",
+});
 
 export default function ProcessPage() {
   return (

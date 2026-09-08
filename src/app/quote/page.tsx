@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import QuoteForm from "@/components/sections/QuoteForm";
 import FAQ from "@/components/sections/FAQ";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Request a Quote",
   description:
     "Upload an STL, OBJ or STEP file, choose a material and quantity, and we will come back with pricing.",
-};
+  path: "/quote",
+});
 
 export default function QuotePage() {
   return (

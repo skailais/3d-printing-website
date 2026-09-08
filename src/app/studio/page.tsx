@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import StudioContent from "@/components/sections/StudioContent";
 import CTASection from "@/components/sections/CTASection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Studio",
   description:
     "A small print studio: how we work, what we believe about making, and how to reach us.",
-};
+  path: "/studio",
+});
 
 export default function StudioPage() {
   return (

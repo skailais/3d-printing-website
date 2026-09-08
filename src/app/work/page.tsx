@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import WorkGallery from "@/components/sections/WorkGallery";
 import CTASection from "@/components/sections/CTASection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Work",
   description:
     "Prototypes, mechanical parts, miniatures, custom designs, replacement parts and small production runs.",
-};
+  path: "/work",
+});
 
 export default function WorkPage() {
   return (

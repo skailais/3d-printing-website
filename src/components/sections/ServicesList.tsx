@@ -5,9 +5,14 @@ import { Reveal } from "@/components/ui/Reveal";
 import { InkPlate } from "@/components/art/InkPlate";
 import { services } from "@/lib/data";
 
+/* The hover wash on each row bleeds 2rem past both its sides, which is the
+   point of it — but on a phone the row is already the full width, so the bleed
+   pushed the document 8px wider than the screen and the whole page slid
+   sideways. The section clips it: `overflow-x-clip` rather than `hidden`, so
+   this does not quietly become a scroll container. */
 export default function ServicesList() {
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className="relative overflow-x-clip py-24 sm:py-32">
       <div className="mx-auto max-w-[86rem] px-6 lg:px-10">
         <ul className="border-t border-rule">
           {services.map((s, i) => (

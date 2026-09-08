@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import MaterialsGrid from "@/components/sections/MaterialsGrid";
 import CTASection from "@/components/sections/CTASection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Materials",
   description:
     "PLA, PETG, ABS, ASA, TPU, nylon, carbon-filled filaments and resins — matched to the forces your part will meet.",
-};
+  path: "/materials",
+});
 
 export default function MaterialsPage() {
   return (
