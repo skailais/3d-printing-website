@@ -137,7 +137,7 @@ export const steps: {
     title: "Receive Your Part",
     description: "Cleaned, checked, packed, and shipped tracked to your door.",
     detail:
-      "Supports removed and surfaces finished by hand. Local pickup available if you would rather see it in person.",
+      "Supports removed and surfaces finished by hand, then packed and sent — we deliver every order.",
     scene: "blossom",
     pigment: "vermilion",
   },
@@ -212,7 +212,7 @@ export const faqs = [
   },
   {
     question: "Do you ship?",
-    answer: "Nationwide, tracked. Local pickup is available by arrangement.",
+    answer: "Nationwide, tracked. Everything is delivered — we do not offer collection.",
   },
 ];
 
