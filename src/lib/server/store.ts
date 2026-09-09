@@ -38,26 +38,62 @@ async function writeAtomic(file: string, data: unknown) {
   await fs.rename(temp, target);
 }
 
+/** The file is there but cannot be trusted: not JSON, or JSON that is not a list. */
+export class UnreadableStore extends Error {
+  constructor(file: string, why: string) {
+    super(`[store] ${file} ${why} — refusing to overwrite it. Fix or restore the file, then retry.`);
+    this.name = "UnreadableStore";
+  }
+}
+
+/** Missing -> empty. Present but unreadable -> UnreadableStore. Anything else propagates. */
+async function readStrict<T>(file: string): Promise<T[]> {
+  let raw: string;
+  try {
+    raw = await fs.readFile(path.join(DATA_DIR, file), "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new UnreadableStore(file, "is not valid JSON");
+  }
+  if (!Array.isArray(parsed)) throw new UnreadableStore(file, "is not a list");
+  return parsed as T[];
+}
+
+/**
+ * For reading. A file that cannot be trusted reads as empty, so a page still
+ * renders and says so in the log rather than taking the whole app down.
+ */
 export async function readCollection<T>(file: string): Promise<T[]> {
   try {
-    const raw = await fs.readFile(path.join(DATA_DIR, file), "utf8");
-    const parsed: unknown = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as T[]) : [];
+    return await readStrict<T>(file);
   } catch (error) {
-    const code = (error as NodeJS.ErrnoException).code;
-    if (code === "ENOENT") return [];
-    if (error instanceof SyntaxError) {
-      // a corrupt file should not take the whole page down
-      console.error(`[store] ${file} is not valid JSON — treating as empty`);
+    if (error instanceof UnreadableStore) {
+      console.error(`${error.message} (reading it as empty for now)`);
       return [];
     }
     throw error;
   }
 }
 
+/*
+ * For writing, the same leniency would be a data-loss bug: read the corrupt
+ * file as empty, apply one change, write atomically — and the rename has
+ * replaced everything that was in it with a one-item list. So writes go
+ * through readStrict() and let UnreadableStore propagate. A hand edit with
+ * a stray comma then makes the next save fail loudly, with the original
+ * bytes still on disk, instead of quietly succeeding over the top of them.
+ */
+
 export async function append<T>(file: string, item: T): Promise<void> {
   await withLock(file, async () => {
-    const items = await readCollection<T>(file);
+    const items = await readStrict<T>(file);
     items.push(item);
     await writeAtomic(file, items);
   });
@@ -69,7 +105,7 @@ export async function update<T>(
   mutate: (items: T[]) => T[]
 ): Promise<T[]> {
   return withLock(file, async () => {
-    const next = mutate(await readCollection<T>(file));
+    const next = mutate(await readStrict<T>(file));
     await writeAtomic(file, next);
     return next;
   });
@@ -82,7 +118,7 @@ export async function appendCapped<T>(
   cap: number
 ): Promise<void> {
   await withLock(file, async () => {
-    const items = await readCollection<T>(file);
+    const items = await readStrict<T>(file);
     items.push(item);
     await writeAtomic(file, items.length > cap ? items.slice(-cap) : items);
   });
