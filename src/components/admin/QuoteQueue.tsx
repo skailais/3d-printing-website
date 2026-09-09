@@ -35,16 +35,25 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
   const router = useRouter();
   const [busy, setBusy] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const changeStatus = async (id: string, status: QuoteStatus) => {
     setBusy(id);
+    setError(null);
     try {
-      await fetch(`/api/quotes/${id}`, {
+      const response = await fetch(`/api/quotes/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        setError(payload.error ?? "Could not save that change.");
+        return;
+      }
       router.refresh();
+    } catch {
+      setError("Could not reach the server.");
     } finally {
       setBusy(null);
     }
@@ -53,6 +62,15 @@ export default function QuoteQueue({ quotes }: { quotes: Quote[] }) {
   return (
     <section className="border border-paper/12 bg-paper/[0.03] p-7">
       <h2 className="font-display text-lg text-paper">Quote requests</h2>
+
+      {error && (
+        <p
+          role="alert"
+          className="mt-4 border-l-2 border-[#e15a3c] pl-3 font-mono text-[0.58rem] tracked-label text-[#e15a3c]"
+        >
+          {error}
+        </p>
+      )}
 
       {quotes.length === 0 ? (
         <p className="mt-6 text-sm leading-relaxed text-paper/60">
