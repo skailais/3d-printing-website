@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import { UPLOAD_DIR, append, readCollection, update } from "@/lib/server/store";
+import { UPLOAD_DIR, readCollection, update } from "@/lib/server/store";
 
 export const QUOTES_FILE = "quotes.json";
 
@@ -69,7 +69,6 @@ export async function createQuote(input: {
   comment: string;
   files: File[];
 }): Promise<Quote> {
-  const existing = await readCollection<Quote>(QUOTES_FILE);
   const id = randomUUID();
   const dir = path.join(UPLOAD_DIR, id);
 
@@ -87,20 +86,27 @@ export async function createQuote(input: {
     }
   }
 
-  const quote: Quote = {
-    id,
-    ref: makeRef(existing.length),
-    receivedAt: new Date().toISOString(),
-    name: input.name,
-    email: input.email,
-    material: input.material,
-    quantity: input.quantity,
-    comment: input.comment,
-    files: stored,
-    status: "new",
-  };
+  // The reference is numbered from the collection length, so it has to be
+  // read inside the same lock as the write. Reading it up front and appending
+  // later left a gap where two requests arriving together would both see the
+  // same length and hand two customers the same reference.
+  let quote!: Quote;
+  await update<Quote>(QUOTES_FILE, (existing) => {
+    quote = {
+      id,
+      ref: makeRef(existing.length),
+      receivedAt: new Date().toISOString(),
+      name: input.name,
+      email: input.email,
+      material: input.material,
+      quantity: input.quantity,
+      comment: input.comment,
+      files: stored,
+      status: "new",
+    };
+    return [...existing, quote];
+  });
 
-  await append(QUOTES_FILE, quote);
   return quote;
 }
 
